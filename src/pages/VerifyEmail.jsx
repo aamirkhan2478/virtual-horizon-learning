@@ -5,6 +5,7 @@ import svg from "../assets/illustration.svg";
 import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const VerifyEmail = ({ title }) => {
   useEffect(() => {
@@ -30,7 +31,7 @@ const VerifyEmail = ({ title }) => {
   function onSuccess(data) {
     toast({
       variant: "default",
-      title: "Verification Successfull!",
+      title: "Verification Successful!",
       description: data?.data?.data?.message,
       className: "bg-green-500 text-white",
     });
@@ -85,6 +86,11 @@ const VerifyEmail = ({ title }) => {
       </div>
     </>
   );
+};
+
+// props validation
+VerifyEmail.propTypes = {
+  title: PropTypes.string,
 };
 
 export default VerifyEmail;

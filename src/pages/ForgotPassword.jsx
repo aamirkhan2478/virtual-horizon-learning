@@ -6,8 +6,11 @@ import svg from "../assets/illustration.svg";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import PropTypes from "prop-types";
 
 function ForgotPassword({ title }) {
+  const { toast } = useToast();
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
@@ -75,6 +78,7 @@ function ForgotPassword({ title }) {
                   value={userEmail.email}
                   onChange={handleChange}
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -108,5 +112,10 @@ function ForgotPassword({ title }) {
     </>
   );
 }
+
+// props validation
+ForgotPassword.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default ForgotPassword;

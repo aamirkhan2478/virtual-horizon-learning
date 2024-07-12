@@ -6,8 +6,14 @@ import svg from "../assets/illustration.svg";
 import { useEffect, useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { useToast } from "@/components/ui/use-toast"
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 const Login = ({ title }) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
@@ -142,6 +148,11 @@ const Login = ({ title }) => {
       </div>
     </>
   );
+};
+
+// props validation
+Login.propTypes = {
+  title: PropTypes.string.isRequired,
 };
 
 export default Login;

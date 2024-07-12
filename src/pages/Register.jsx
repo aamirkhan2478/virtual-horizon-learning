@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useRegister } from "@/hooks/useAuth";
 import svg from "../assets/illustration.svg";
 import Select from "../components/Select";
+import PropTypes from "prop-types";
 
 const Register = ({ title }) => {
   useEffect(() => {
@@ -186,4 +187,8 @@ const Register = ({ title }) => {
   );
 };
 
+// props validation
+Register.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 export default Register;
