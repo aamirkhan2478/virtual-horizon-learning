@@ -53,8 +53,7 @@ const Login = ({ title }) => {
   function onSuccess() {
     toast({
       variant: "default",
-      title: "Registered Successfully!",
-      description: "Please check your email for verification.",
+      title: "Logged in Successfully!",
       className: "bg-green-500 text-white",
     });
   }
