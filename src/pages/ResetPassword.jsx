@@ -1,48 +1,56 @@
 import { useEffect, useState } from "react";
-import { useForgotPassword } from "@/hooks/useAuth";
+import { useResetPassword } from "@/hooks/useAuth";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import svg from "../assets/illustration.svg";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import PropTypes from "prop-types";
 
-function ForgotPassword({ title }) {
+function ResetPassword({ title }) {
   const { toast } = useToast();
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
 
-  const [userEmail, setUserEmail] = useState({ email: "" });
-  const { mutate, isLoading } = useForgotPassword(onSuccess, onError);
+  const { token } = useParams();
+  const navigate = useNavigate();
+  const { mutate, isLoading } = useResetPassword(onSuccess, onError);
+
+  const [userData, setUserData] = useState({
+    password: "",
+  });
 
   const handleChange = (e) => {
-    setUserEmail({ ...userEmail, [e.target.name]: e.target.value });
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const Email = {
-      email: userEmail.email,
+    const userPassword = {
+      token: token,
+      password: userData.password,
     };
 
-    mutate(Email);
+    mutate(userPassword, {
+      onSuccess: () => {
+        navigate("/");
+      },
+    });
   };
 
-  function onSuccess() {
+  function onSuccess(data) {
     toast({
       variant: "default",
-      title: "Link Sent Successfully!",
-      description: "Please check your inbox.",
+      title: data?.data?.data?.message,
       className: "bg-green-500 text-white",
     });
   }
 
   function onError(error) {
-    console.log(error);
     toast({
       variant: "destructive",
       title: "Uh oh! Something went wrong.",
@@ -65,22 +73,17 @@ function ForgotPassword({ title }) {
         <div className="flex items-center justify-center py-12 flex-row-reverse">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
-              <h1 className="text-3xl font-bold">Forgot Password</h1>
-              <p className="text-sm text-balance text-muted-foreground">
-                Please enter your email so we can send you a reset password
-                email.
-              </p>
+              <h1 className="text-3xl font-bold">Reset Password</h1>
             </div>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="password">Email</Label>
+                <Label htmlFor="password">New Password</Label>
                 <Input
-                  value={userEmail.email}
+                  value={userData.password}
                   onChange={handleChange}
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="password"
+                  name="password"
+                  type="password"
                   required
                 />
               </div>
@@ -96,13 +99,13 @@ function ForgotPassword({ title }) {
                     Please wait
                   </>
                 ) : (
-                  "Send Now"
+                  "Reset Now"
                 )}
               </Button>
               <div className="mt-4 text-center text-sm">
-                Go Back to &nbsp;
-                <Link to={"/"} className="underline">
-                  Login
+                If token expired get new link from &nbsp;
+                <Link to={"/forgot-password"} className="underline">
+                  here
                 </Link>
               </div>
             </div>
@@ -114,8 +117,8 @@ function ForgotPassword({ title }) {
 }
 
 // props validation
-ForgotPassword.propTypes = {
+ResetPassword.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default ForgotPassword;
+export default ResetPassword;
