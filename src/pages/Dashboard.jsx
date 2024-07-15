@@ -9,6 +9,7 @@ import {
   Package,
   Package2,
   PanelLeft,
+  Search,
   Settings,
   ShoppingCart,
   Users2,
@@ -175,7 +176,7 @@ const Dashboard = ({ title }) => {
                   </Link>
                   <Link
                     href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    className="flex items-center gap-4 px-2.5 text-foreground hover:text-foreground"
                   >
                     <Home className="h-5 w-5" />
                     Dashboard
@@ -189,7 +190,7 @@ const Dashboard = ({ title }) => {
                   </Link>
                   <Link
                     href="#"
-                    className="flex items-center gap-4 px-2.5 text-foreground"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   >
                     <Package className="h-5 w-5" />
                     Products
@@ -219,9 +220,10 @@ const Dashboard = ({ title }) => {
               </BreadcrumbList>
             </Breadcrumb>
             <div className="relative ml-auto flex-1 md:grow-0">
+              <Search className="absolute right-5 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search..."
+                placeholder="Search"
                 className="h-10 w-full sm:w-64 sm:pr-12 md:w-80 md:pr-12"
               />
             </div>
