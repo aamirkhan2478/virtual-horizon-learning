@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   File,
   Home,
@@ -40,8 +40,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useToast } from "@/components/ui/use-toast";
 
 const Dashboard = ({ title }) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
@@ -50,6 +53,16 @@ const Dashboard = ({ title }) => {
     // Remove user data from localStorage
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
+    // Navigate User to Login
+    navigate("/");
+
+    toast({
+      variant: "default",
+      title: "Success",
+      description: "Logged Out Successfully!",
+      className: "bg-green-500 text-white",
+    });
   };
 
   return (
