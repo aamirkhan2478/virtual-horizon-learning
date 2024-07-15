@@ -6,9 +6,14 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResendEmail from "./pages/ResendEmail";
 import ResetPassword from "./pages/ResetPassword";
-import { DashboardProtected, LoginProtected } from "./components/ProtectedRoute";
+import {
+  DashboardProtected,
+  LoginProtected,
+} from "./components/ProtectedRoute";
 import AuthLayout from "./pages/AuthLayout";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import DashboardLayout from "./pages/DashboardLayout";
 
 const App = () => {
   return (
@@ -40,9 +45,14 @@ const App = () => {
         <Route element={<DashboardProtected />}>
           <Route
             path="/dashboard"
-            index
-            element={<Dashboard title="Dashboard" />}
-          />
+            element={<DashboardLayout title="Dashboard" />}
+          >
+            <Route index element={<Dashboard title="Dashboard" />} />
+            <Route
+              path="/dashboard/user-profile"
+              element={<Profile title="User Profile" />}
+            />
+          </Route>
         </Route>
       </Routes>
     </>
