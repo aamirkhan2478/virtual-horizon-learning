@@ -1,18 +1,6 @@
-import React from "react";
-import { useEffect } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import {
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  Settings,
-  ShoppingCart,
-  User,
-  Users2,
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { BookMarked, Home, School, PanelLeft, Settings } from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -28,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
 import PropTypes from "prop-types";
@@ -40,6 +27,11 @@ const DashboardLayout = ({ title }) => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
 
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const handleLinkClick = () => {
+    setIsSheetOpen(false);
+  };
+
   const handleLogout = () => {
     // Remove user data from localStorage
     localStorage.removeItem("user");
@@ -50,14 +42,13 @@ const DashboardLayout = ({ title }) => {
 
     toast({
       variant: "default",
-      title: "Success",
-      description: "Logged Out Successfully!",
-      className: "bg-green-500 text-w hite",
+      title: "Logged Out Successfully!",
+      className: "bg-green-500 text-white",
     });
   };
 
   const userProfile = () => {
-    // Navigate User to Login
+    // Navigate User Profile Page
     navigate("/dashboard/user-profile");
   };
 
@@ -66,6 +57,17 @@ const DashboardLayout = ({ title }) => {
   const defaultUserImage =
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
 
+  const location = useLocation();
+  const getLinkClass = (path) => {
+    return location.pathname === path
+      ? "text-foreground"
+      : "text-muted-foreground";
+  };
+
+  const getActiveBg = (path) => {
+    return location.pathname === path ? "bg-accent" : "";
+  };
+
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -73,17 +75,17 @@ const DashboardLayout = ({ title }) => {
           <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
             <nav className="flex flex-col items-center gap-4 px-2 py-4">
               <Link
-                to="#"
-                className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+                to={"/dashboard"}
+                className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base ${getLinkClass("/dashboard")}`}
               >
-                <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-                <span className="sr-only">Acme Inc</span>
+                <School className="font-bold h-5 w-5 transition-all group-hover:scale-110" />
+                <span className="sr-only">Virtual Horizan Learning</span>
               </Link>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
                     to={"/dashboard"}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard")} ${getActiveBg("/dashboard")}`}
                   >
                     <Home className="h-5 w-5" />
                     <span className="sr-only">Dashboard</span>
@@ -94,50 +96,14 @@ const DashboardLayout = ({ title }) => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    to={"/dashboard/resources"}
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard/resources")} ${getActiveBg("/dashboard/resources")}`}
                   >
-                    <ShoppingCart className="h-5 w-5" />
-                    <span className="sr-only">Orders</span>
+                    <BookMarked className="h-5 w-5" />
+                    <span className="sr-only">Resources</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Orders</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <Package className="h-5 w-5" />
-                    <span className="sr-only">Products</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">Products</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <Users2 className="h-5 w-5" />
-                    <span className="sr-only">Customers</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">Customers</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <LineChart className="h-5 w-5" />
-                    <span className="sr-only">Analytics</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">Analytics</TooltipContent>
+                <TooltipContent side="right">Resources</TooltipContent>
               </Tooltip>
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-4">
@@ -158,9 +124,14 @@ const DashboardLayout = ({ title }) => {
         </TooltipProvider>
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-            <Sheet>
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="sm:hidden">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="sm:hidden"
+                  onClick={() => setIsSheetOpen(true)}
+                >
                   <PanelLeft className="h-5 w-5" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
@@ -169,45 +140,27 @@ const DashboardLayout = ({ title }) => {
                 <nav className="grid gap-6 text-lg font-medium">
                   <Link
                     to={"/dashboard"}
-                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                    onClick={handleLinkClick}
+                    className={`group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base ${getLinkClass("/dashboard")}`}
                   >
-                    <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-                    <span className="sr-only">Acme Inc</span>
+                    <School className="h-5 w-5 transition-all group-hover:scale-110" />
+                    <span className="sr-only">Virtual Horizan Learning</span>
                   </Link>
                   <Link
                     to={"/dashboard"}
-                    className="flex items-center gap-4 px-2.5 text-foreground hover:text-foreground"
+                    onClick={handleLinkClick}
+                    className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard")}`}
                   >
                     <Home className="h-5 w-5" />
                     Dashboard
                   </Link>
                   <Link
-                    to="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    to={"/dashboard/resources"}
+                    onClick={handleLinkClick}
+                    className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard/resources")}`}
                   >
-                    <ShoppingCart className="h-5 w-5" />
-                    Orders
-                  </Link>
-                  <Link
-                    to="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Package className="h-5 w-5" />
-                    Products
-                  </Link>
-                  <Link
-                    to="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Users2 className="h-5 w-5" />
-                    Customers
-                  </Link>
-                  <Link
-                    to={"/dashboard/user-profile"}
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <User className="h-5 w-5" />
-                    My Profile
+                    <BookMarked className="h-5 w-5" />
+                    Resources
                   </Link>
                 </nav>
               </SheetContent>
