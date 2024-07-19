@@ -112,6 +112,12 @@ const Profile = ({ title }) => {
   const passwordRef = useRef();
   const newPasswordRef = useRef();
 
+  // Update the user password
+  const [password, setPassword] = useState({
+    currentPassword: "",
+    newPassword: "",
+  });
+  
   const handlePasswordUpdate = (e) => {
     const { name, value } = e.target;
     setPassword((Password) => ({
@@ -153,8 +159,10 @@ const Profile = ({ title }) => {
     setShowNewPassword(!showNewPassword);
   };
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   function onSuccess(data) {
+    setIsDialogOpen(false);
     toast({
       variant: "default",
       title: data?.data?.message,
@@ -203,9 +211,13 @@ const Profile = ({ title }) => {
                   style={{ display: "none" }}
                   onChange={handleImageChange}
                 />
-                <Dialog>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setIsDialogOpen(true)}
+                    >
                       <Pencil size={18} />
                     </Button>
                   </DialogTrigger>
@@ -308,6 +320,7 @@ const Profile = ({ title }) => {
                     <div className="relative">
                       <Input
                         id="currentPassword"
+                        name="currentPassword"
                         type={showCurrentPassword ? "text" : "password"}
                         ref={passwordRef}
                         onChange={handlePasswordUpdate}
@@ -327,10 +340,11 @@ const Profile = ({ title }) => {
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="NewPassword">New Password</Label>
+                    <Label htmlFor="newPassword">New Password</Label>
                     <div className="relative">
                       <Input
-                        id="NewPassword"
+                        id="newPassword"
+                        name="newPassword"
                         type={showNewPassword ? "text" : "password"}
                         ref={newPasswordRef}
                         onChange={handlePasswordUpdate}
