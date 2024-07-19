@@ -22,7 +22,7 @@ const VerifyEmail = ({ title }) => {
       { token },
       {
         onSuccess: () => {
-          navigate("/login");
+          navigate("/");
         },
       }
     );
