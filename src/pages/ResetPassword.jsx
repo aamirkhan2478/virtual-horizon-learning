@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import PropTypes from "prop-types";
+import { Eye, EyeOff } from "lucide-react";
 
 function ResetPassword({ title }) {
   const { toast } = useToast();
@@ -19,6 +20,11 @@ function ResetPassword({ title }) {
   const navigate = useNavigate();
   const { mutate, isLoading } = useResetPassword(onSuccess, onError);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
   const [userData, setUserData] = useState({
     password: "",
   });
@@ -43,9 +49,13 @@ function ResetPassword({ title }) {
   };
 
   function onSuccess(data) {
+    console.log('data',data);
+    console.log("data?.data?.data?.message", data?.data?.data?.message);
+    console.log("data?.data?.message", data?.data?.message);
+    
     toast({
       variant: "default",
-      title: data?.data?.data?.message,
+      title: data?.data?.message,
       className: "bg-green-500 text-white",
     });
   }
@@ -78,14 +88,23 @@ function ResetPassword({ title }) {
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="password">New Password</Label>
-                <Input
-                  value={userData.password}
-                  onChange={handleChange}
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    value={userData.password}
+                    onChange={handleChange}
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-0 top-0 mt-2 mr-3"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
               <Button
                 disabled={isLoading}

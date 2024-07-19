@@ -6,10 +6,10 @@ import svg from "../assets/illustration.svg";
 import { useEffect, useState } from "react";
 import { useLogin } from "@/hooks/useAuth";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = ({ title }) => {
   const navigate = useNavigate();
@@ -17,6 +17,12 @@ const Login = ({ title }) => {
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const [user, setUser] = useState({
     email: "",
@@ -101,13 +107,23 @@ const Login = ({ title }) => {
                       Forgot your password?
                     </Link>
                   </div>
-                  <Input
-                    value={user.password}
-                    onChange={handleInputChange}
-                    id="password"
-                    type="password"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      value={user.password}
+                      onChange={handleInputChange}
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      required
+                      className="pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-0 top-0 mt-2 mr-3"
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                  </div>
                 </div>
                 <Button disabled={isLoading} type="submit" className="w-full">
                   {isLoading ? (

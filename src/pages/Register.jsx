@@ -9,6 +9,7 @@ import { useRegister } from "@/hooks/useAuth";
 import svg from "../assets/illustration.svg";
 import Select from "../components/Select";
 import PropTypes from "prop-types";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = ({ title }) => {
   useEffect(() => {
@@ -16,6 +17,17 @@ const Register = ({ title }) => {
   }, [title]);
 
   const { toast } = useToast();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const data = [
     { value: "Teacher", label: "Teacher" },
@@ -136,22 +148,46 @@ const Register = ({ title }) => {
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input
-                    value={user.password}
-                    onChange={handleInputChange}
-                    id="password"
-                    type="password"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      value={user.password}
+                      onChange={handleInputChange}
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      className="pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-0 top-0 mt-2 mr-3"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={user.confirmPassword}
-                    onChange={handleInputChange}
-                  />
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="pr-10"
+                      value={user.confirmPassword}
+                      onChange={handleInputChange}
+                    />
+                    <button
+                      type="button"
+                      onClick={toggleConfirmPasswordVisibility}
+                      className="absolute right-0 top-0 mt-2 mr-3"
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff size={20} />
+                      ) : (
+                        <Eye size={20} />
+                      )}
+                    </button>
+                  </div>
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="selectType">Select Type</Label>
