@@ -212,15 +212,8 @@ const DashboardLayout = ({ title }) => {
                 </nav>
               </SheetContent>
             </Sheet>
-            <div className="relative ml-auto flex-1 md:grow-0">
-              <Search className="absolute right-5 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search"
-                className="h-10 w-full sm:w-64 sm:pr-12 md:w-80 md:pr-12"
-              />
-            </div>
-            <nav className="hidden items-center md:flex">
+            <div className="relative ml-auto flex-1 md:grow-0"></div>
+            <nav className="items-center md:flex">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
