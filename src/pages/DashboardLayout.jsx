@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { BookMarked, Home, School, PanelLeft, Settings } from "lucide-react";
+import { BookMarked, Home, School, PanelLeft, UserCog } from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -110,14 +110,14 @@ const DashboardLayout = ({ title }) => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    to="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    to={"/dashboard/user-profile"}
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${getLinkClass("/dashboard/user-profile")} ${getActiveBg("/dashboard/user-profile")}`}
                   >
-                    <Settings className="h-5 w-5" />
-                    <span className="sr-only">Settings</span>
+                    <UserCog className="h-5 w-5" />
+                    <span className="sr-only">Profile</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Settings</TooltipContent>
+                <TooltipContent side="right">Profile</TooltipContent>
               </Tooltip>
             </nav>
           </aside>

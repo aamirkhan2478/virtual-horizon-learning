@@ -264,6 +264,8 @@ const Profile = ({ title }) => {
                         type="submit"
                         disabled={isLoading}
                         onClick={handleUserUpdate}
+                        size="sm"
+                        variant="outline"
                       >
                         {isLoading ? (
                           <>
@@ -280,7 +282,7 @@ const Profile = ({ title }) => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 sm:md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div className="grid gap-2">
                   <p className="text-md font-medium leading-none">Name</p>
                   <p className="text-sm text-muted-foreground">{user?.name}</p>
@@ -368,6 +370,7 @@ const Profile = ({ title }) => {
                       className="md:lg:w-[160px]"
                       disabled={changePasswordLoading}
                       onClick={handlePasswordChange}
+                      variant="outline"
                     >
                       {changePasswordLoading ? (
                         <>
