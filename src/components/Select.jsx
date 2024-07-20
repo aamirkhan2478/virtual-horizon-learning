@@ -9,7 +9,7 @@ import {
 const Select = ({ data, id, value, onChange }) => {
   return (
     <ShadcnSelect onValueChange={onChange}>
-      <SelectTrigger id={id} className="w-[100]">
+      <SelectTrigger id={id} className="w-full">
         <SelectValue placeholder="Please Select Type" />
       </SelectTrigger>
       <SelectContent>

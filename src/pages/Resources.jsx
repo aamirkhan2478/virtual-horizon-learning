@@ -9,8 +9,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FilePlus2, ShoppingBasket, UserCheck } from "lucide-react";
+import { BookOpenText, FilePlus2, ShoppingBasket, UserCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function Resources({ title }) {
   useEffect(() => {
@@ -52,7 +58,7 @@ function Resources({ title }) {
   const navigate = useNavigate();
 
   const addResource = () => {
-    // Navigate User Profile Page
+    // Navigate Add Resource Page
     navigate("/dashboard/add-resource");
   };
 
@@ -63,9 +69,18 @@ function Resources({ title }) {
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold md:text-2xl">Resources</h1>
         {user?.userType === "Admin" && (
-          <Button size="icon" onClick={addResource}>
-            <FilePlus2 className="h-6 w-6 font-bold" />
-          </Button>
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="icon" variant="outline" onClick={addResource}>
+                    <FilePlus2 className="h-6 w-6 font-bold" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">Add Resource</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
         )}
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -93,7 +108,7 @@ function Resources({ title }) {
                   <CardTitle>{card?.title}</CardTitle>
                   <CardDescription>{card?.description}</CardDescription>
                 </CardContent>
-                <CardFooter className="p-4">
+                <CardFooter className="p-4 flex justify-center">
                   {user?.userType === "Student" && (
                     <>
                       <Button size="sm">
@@ -104,6 +119,11 @@ function Resources({ title }) {
                   {user?.userType === "Teacher" && (
                     <Button size="sm">
                       <UserCheck className="h-4 w-4 mr-2" /> Assign
+                    </Button>
+                  )}
+                  {user?.userType === "Admin" && (
+                    <Button size="sm">
+                      <BookOpenText className="h-4 w-4 mr-2" /> View Details
                     </Button>
                   )}
                 </CardFooter>
