@@ -23,6 +23,14 @@ const updatePassword = (values) => {
         },
     });
 };
+const updateImage = (values) => {
+    const token = localStorage.getItem("token");
+    return axios.patch("/user/update-image", values, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
 
 
 export const useRegister = (onSuccess, onError) => {
@@ -80,3 +88,10 @@ export const useChangePassword = (onSuccess, onError) => {
         onError,
     });
 };
+
+export const useUpdateImage = (onSuccess, onError) => {
+    return useMutation(updateImage, {
+        onSuccess,
+        onError,
+    });
+}

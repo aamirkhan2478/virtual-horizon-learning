@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogContent,
@@ -23,10 +24,15 @@ import {
 } from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { useChangePassword, useUpdate } from "@/hooks/useAuth";
+import { useChangePassword, useUpdate, useUpdateImage } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 
 const Profile = ({ title }) => {
+  const defaultUserImage =
+    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
+
+  const [profilePic, setProfilePic] = useState("");
+
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
     // Retrieve the user data from localStorage
@@ -38,6 +44,7 @@ const Profile = ({ title }) => {
     if (userData && userData.name && userData.email) {
       // Set the user data to state
       setUser(userData);
+      setProfilePic(userData.pic || defaultUserImage);
     } else {
       console.log("User data not found in localStorage.");
     }
@@ -55,6 +62,10 @@ const Profile = ({ title }) => {
   });
 
   const { mutate, isLoading } = useUpdate(onSuccess, onError);
+  const { mutate: updateImage, isLoading: uploading } = useUpdateImage(
+    onSuccess,
+    onError
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,11 +104,6 @@ const Profile = ({ title }) => {
     });
   };
 
-  const defaultUserImage =
-    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
-
-  const [profilePic, setProfilePic] = useState(user?.pic || defaultUserImage);
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -106,6 +112,33 @@ const Profile = ({ title }) => {
         setProfilePic(e.target.result);
       };
       reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append("pic", file);
+
+      updateImage(formData, {
+        onSuccess: (data) => {
+          console.log(data?.data);
+          toast({
+            variant: "default",
+            title: "Profile image updated successfully.",
+            className: "bg-green-500 text-white",
+          });
+
+          // Update the user data in localStorage
+          const userDataJSON = localStorage.getItem("user");
+          // Parse the JSON string to get the user object
+          const userData = JSON.parse(userDataJSON);
+          // Update the user object
+          const newUser = {
+            ...userData,
+            pic: data.data.pic,
+          };
+
+          // Update the user data in localStorage
+          localStorage.setItem("user", JSON.stringify(newUser));
+        },
+      });
     }
   };
 
@@ -117,7 +150,7 @@ const Profile = ({ title }) => {
     currentPassword: "",
     newPassword: "",
   });
-  
+
   const handlePasswordUpdate = (e) => {
     const { name, value } = e.target;
     setPassword((Password) => ({
@@ -191,12 +224,18 @@ const Profile = ({ title }) => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <label htmlFor="profile-pic-input">
-                        <img
-                          src={profilePic}
-                          alt="User profile"
-                          className="w-20 h-20 rounded-full cursor-pointer border-2"
-                        />
+                      <label
+                        htmlFor="profile-pic-input"
+                        className="cursor-pointer"
+                      >
+                        <Avatar className="w-20 h-20 border">
+                          <AvatarImage src={profilePic} alt="User profile" />
+                          <AvatarFallback>
+                            {uploading && (
+                              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            )}
+                          </AvatarFallback>
+                        </Avatar>
                       </label>
                     </TooltipTrigger>
                     <TooltipContent side="right">
@@ -226,8 +265,8 @@ const Profile = ({ title }) => {
                     <DialogHeader>
                       <DialogTitle>Edit profile</DialogTitle>
                       <DialogDescription>
-                        Make changes to your profile. Click save when you're
-                        done.
+                        Make changes to your profile. Click save when
+                        you&apos;re done.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
@@ -253,7 +292,7 @@ const Profile = ({ title }) => {
                         <Label htmlFor="phone">Phone #</Label>
                         <Input
                           id="phone"
-                          name="phonrNumber"
+                          name="phoneNumber"
                           value={user?.phoneNumber}
                           onChange={handleChange}
                         />
