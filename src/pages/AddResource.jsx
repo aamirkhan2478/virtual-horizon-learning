@@ -9,21 +9,36 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ArrowRight, Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import PropTypes from "prop-types";
+import { useCreateResource } from "@/hooks/useResources";
+import { useToast } from "@/components/ui/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
 function AddResource({ title }) {
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
 
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const Resources = () => {
     // Navigate Resources Page
     navigate("/dashboard/resources");
   };
+
+  const [resource, setResource] = useState({
+    title: "",
+    description: "",
+    thumbnail: "",
+    video: [],
+    pdf: "",
+    type: "",
+  });
+
+  const { mutate, isLoading } = useCreateResource(onSuccess, onError);
 
   const [selectedType, setSelectedType] = useState("");
 
@@ -36,6 +51,62 @@ function AddResource({ title }) {
     const value = e.target ? e.target.value : e;
     setSelectedType(value);
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setResource({ ...resource, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setResource({ ...resource, [name]: files });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(resource.video);
+    const formData = new FormData();
+    formData.append("title", resource.title);
+    formData.append("description", resource.description);
+    formData.append("thumbnail", resource.thumbnail[0]);
+    formData.append("type", selectedType);
+
+    if (selectedType === "Video") {
+      resource.video.forEach((file) => {
+        formData.append("video", file);
+      });
+    } else {
+      formData.append("pdf", resource.pdf[0]);
+    }
+
+    mutate(formData, {
+      onSuccess: () => {
+        navigate("/dashboard/resources");
+        toast({
+          variant: "default",
+          title: "Resource Added Successfully!",
+          className: "bg-green-500 text-white",
+        });
+      },
+    });
+  };
+
+  function onSuccess() {
+    toast({
+      variant: "default",
+      title: "Resource Added Successfully!",
+      className: "bg-green-500 text-white",
+    });
+  }
+
+  function onError(error) {
+    console.log(error);
+    toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: error?.response?.data?.message,
+    });
+  }
 
   return (
     <>
@@ -63,6 +134,8 @@ function AddResource({ title }) {
                   type="text"
                   placeholder="Enter title"
                   className="w-full"
+                  onChange={handleInputChange}
+                  name="title"
                 />
               </div>
               <div className="w-full">
@@ -72,6 +145,8 @@ function AddResource({ title }) {
                   type="text"
                   placeholder="Enter description"
                   className="w-full"
+                  onChange={handleInputChange}
+                  name="description"
                 />
               </div>
               <div className="w-full">
@@ -82,11 +157,19 @@ function AddResource({ title }) {
                   data={types}
                   onChange={handleTypeChange}
                   className="w-full"
+                  name="type"
                 />
               </div>
               <div className="w-full">
                 <Label htmlFor="thumbnail">Thumbnail</Label>
-                <Input type="file" id="thumbnail" className="w-full" />
+                <Input
+                  type="file"
+                  id="thumbnail"
+                  className="w-full"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  name="thumbnail"
+                />
               </div>
               {selectedType === "Video" && (
                 <div className="w-full">
@@ -96,6 +179,9 @@ function AddResource({ title }) {
                     id="video"
                     className="w-full"
                     accept="video/*"
+                    onChange={handleFileChange}
+                    name="video"
+                    multiple
                   />
                 </div>
               )}
@@ -106,14 +192,29 @@ function AddResource({ title }) {
                     type="file"
                     id="pdfFile"
                     className="w-full"
-                    accept="image/*"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    name="pdf"
                   />
                 </div>
               )}
             </div>
             <div className="flex justify-center md:lg:justify-end mt-4">
-              <Button size="sm" className="w-full md:w-auto" variant="outline">
-                Add Resource
+              <Button
+                size="sm"
+                disabled={isLoading}
+                className="w-full md:w-auto"
+                variant="outline"
+                onClick={handleSubmit}
+              >
+                {isLoading ? (
+                  <>
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  "Add Resource"
+                )}
               </Button>
             </div>
           </CardContent>
@@ -122,5 +223,10 @@ function AddResource({ title }) {
     </>
   );
 }
+
+// props validation
+AddResource.propTypes = {
+  title: PropTypes.string,
+};
 
 export default AddResource;
