@@ -33,7 +33,7 @@ function AddResource({ title }) {
     title: "",
     description: "",
     thumbnail: "",
-    video: [],
+    videos: [],
     pdf: "",
     type: "",
   });
@@ -61,10 +61,10 @@ function AddResource({ title }) {
     const { name, files } = e.target;
     setResource({ ...resource, [name]: files });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(resource.video);
+
+    const covertArray = Array.from(resource.videos);
     const formData = new FormData();
     formData.append("title", resource.title);
     formData.append("description", resource.description);
@@ -72,8 +72,8 @@ function AddResource({ title }) {
     formData.append("type", selectedType);
 
     if (selectedType === "Video") {
-      resource.video.forEach((file) => {
-        formData.append("video", file);
+      covertArray.forEach((video) => {
+        formData.append("video", video);
       });
     } else {
       formData.append("pdf", resource.pdf[0]);
@@ -81,12 +81,14 @@ function AddResource({ title }) {
 
     mutate(formData, {
       onSuccess: () => {
-        navigate("/dashboard/resources");
         toast({
           variant: "default",
           title: "Resource Added Successfully!",
           className: "bg-green-500 text-white",
         });
+      },
+      onError: (error) => {
+        onError(error);
       },
     });
   };
@@ -176,11 +178,11 @@ function AddResource({ title }) {
                   <Label htmlFor="videoFile">Video File</Label>
                   <Input
                     type="file"
-                    id="video"
+                    id="videos"
                     className="w-full"
                     accept="video/*"
                     onChange={handleFileChange}
-                    name="video"
+                    name="videos"
                     multiple
                   />
                 </div>
