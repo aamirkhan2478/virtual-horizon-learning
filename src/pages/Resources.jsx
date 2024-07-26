@@ -9,7 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BookOpenText, FilePlus2, ShoppingBasket, UserCheck } from "lucide-react";
+import {
+  BookOpenText,
+  FilePlus2,
+  ShoppingBasket,
+  UserCheck,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -17,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useGetResources } from "@/hooks/useResources";
 
 function Resources({ title }) {
   useEffect(() => {
@@ -24,6 +30,9 @@ function Resources({ title }) {
   }, [title]);
 
   const [loading, setLoading] = useState(true);
+
+  const { data: resourcesData, isLoading } = useGetResources();
+  console.log(resourcesData);
 
   const cards = [
     {
@@ -84,8 +93,8 @@ function Resources({ title }) {
         )}
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {loading
-          ? Array(cards.length)
+        {isLoading
+          ? Array((resourcesData ?? []).length)
               .fill(0)
               .map((_, index) => (
                 <div key={index} className="border rounded shadow p-3">
@@ -95,26 +104,29 @@ function Resources({ title }) {
                   <Skeleton className="w-full h-10" />
                 </div>
               ))
-          : cards.map((card, index) => (
+          : (resourcesData ?? []).map((card, index) => (
               <Card key={index}>
                 <CardHeader className="p-0">
                   <img
-                    src={card?.imageSrc}
+                    src={card?.thumbnail}
                     alt="Card Image"
                     className="w-full h-auto rounded-t"
                   />
                 </CardHeader>
                 <CardContent className="p-4">
                   <CardTitle>{card?.title}</CardTitle>
-                  <CardDescription>{card?.description}</CardDescription>
+                  <CardDescription>
+                    {card?.description
+                      ? card.description.split(" ").slice(0, 10).join(" ") +
+                        (card.description.split(" ").length > 10 ? "..." : "")
+                      : ""}
+                  </CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 flex justify-center">
                   {user?.userType === "Student" && (
-                    <>
-                      <Button size="sm">
-                        <ShoppingBasket className="h-4 w-4 mr-2" /> Buy
-                      </Button>
-                    </>
+                    <Button size="sm">
+                      <ShoppingBasket className="h-4 w-4 mr-2" /> Buy
+                    </Button>
                   )}
                   {user?.userType === "Teacher" && (
                     <Button size="sm">
@@ -122,7 +134,12 @@ function Resources({ title }) {
                     </Button>
                   )}
                   {user?.userType === "Admin" && (
-                    <Button size="sm">
+                    <Button
+                      size="sm"
+                      onClick={() =>
+                        navigate(`/dashboard/resource-details/${card.id}`)
+                      }
+                    >
                       <BookOpenText className="h-4 w-4 mr-2" /> View Details
                     </Button>
                   )}

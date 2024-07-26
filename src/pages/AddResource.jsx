@@ -86,6 +86,8 @@ function AddResource({ title }) {
           title: "Resource Added Successfully!",
           className: "bg-green-500 text-white",
         });
+
+        navigate("/dashboard/resources");
       },
       onError: (error) => {
         onError(error);

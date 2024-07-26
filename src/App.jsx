@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import DashboardLayout from "./pages/DashboardLayout";
 import Resources from "./pages/Resources";
 import AddResource from "./pages/AddResource";
+import ResourceDetails from "./pages/ResourceDetails";
 
 const App = () => {
   return (
@@ -61,6 +62,10 @@ const App = () => {
             <Route
               path="/dashboard/add-resource"
               element={<AddResource title="Add Resource" />}
+            />
+            <Route
+              path="/dashboard/resource-details/:id"
+              element={<ResourceDetails title="Resource Details" />}
             />
           </Route>
         </Route>
