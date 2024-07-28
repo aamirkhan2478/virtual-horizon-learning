@@ -33,6 +33,7 @@ function AddResource({ title }) {
     title: "",
     description: "",
     thumbnail: "",
+    price: "",
     videos: [],
     pdf: "",
     type: "",
@@ -154,17 +155,6 @@ function AddResource({ title }) {
                 />
               </div>
               <div className="w-full">
-                <Label htmlFor="type">Select Type</Label>
-                <Select
-                  id="selectType"
-                  value={selectedType}
-                  data={types}
-                  onChange={handleTypeChange}
-                  className="w-full"
-                  name="type"
-                />
-              </div>
-              <div className="w-full">
                 <Label htmlFor="thumbnail">Thumbnail</Label>
                 <Input
                   type="file"
@@ -173,6 +163,28 @@ function AddResource({ title }) {
                   accept="image/*"
                   onChange={handleFileChange}
                   name="thumbnail"
+                />
+              </div>
+              <div className="w-full">
+                <Label htmlFor="price">Price</Label>
+                <Input
+                  type="number"
+                  id="price"
+                  className="w-full"
+                  placeholder="Enter price"
+                  onChange={handleInputChange}
+                  name="price"
+                />
+              </div>
+              <div className="w-full">
+                <Label htmlFor="type">Select Type</Label>
+                <Select
+                  id="selectType"
+                  value={selectedType}
+                  data={types}
+                  onChange={handleTypeChange}
+                  className="w-full"
+                  name="type"
                 />
               </div>
               {selectedType === "Video" && (
