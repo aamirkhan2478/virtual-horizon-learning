@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { LibraryBig,  Users, UsersRound } from "lucide-react";
+import { LibraryBig, Users, UsersRound } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Dashboard = ({ title }) => {
@@ -26,7 +26,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">4,523</div>
-                <p className="text-xs text-muted-foreground">100</p>
               </CardContent>
             </Card>
             <Card>
@@ -38,7 +37,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">1,22</div>
-                <p className="text-xs text-muted-foreground">300</p>
               </CardContent>
             </Card>
             <Card>
@@ -50,7 +48,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">2,250</div>
-                <p className="text-xs text-muted-foreground">400</p>
               </CardContent>
             </Card>
           </>
@@ -65,7 +62,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">2,250</div>
-                <p className="text-xs text-muted-foreground">400</p>
               </CardContent>
             </Card>
             <Card>
@@ -77,7 +73,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">2,250</div>
-                <p className="text-xs text-muted-foreground">200</p>
               </CardContent>
             </Card>
           </>
@@ -92,7 +87,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">2,250</div>
-                <p className="text-xs text-muted-foreground">200</p>
               </CardContent>
             </Card>
             <Card>
@@ -104,7 +98,6 @@ const Dashboard = ({ title }) => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">2,250</div>
-                <p className="text-xs text-muted-foreground">200</p>
               </CardContent>
             </Card>
           </>
