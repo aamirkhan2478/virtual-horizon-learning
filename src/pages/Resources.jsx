@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -9,12 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  BookOpenText,
-  FilePlus2,
-  ShoppingBasket,
-  UserCheck,
-} from "lucide-react";
+import { BookOpenText, FilePlus2, BadgeInfo } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -23,46 +18,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useGetResources } from "@/hooks/useResources";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function Resources({ title }) {
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
 
-  const [loading, setLoading] = useState(true);
-
   const { data: resourcesData, isLoading } = useGetResources();
   console.log(resourcesData);
-
-  const cards = [
-    {
-      title: "Card 1",
-      description: "This is a description for card 1.",
-      imageSrc: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Card 2",
-      description: "This is a description for card 2.",
-      imageSrc: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Card 3",
-      description: "This is a description for card 3.",
-      imageSrc: "https://via.placeholder.com/400x200",
-    },
-    {
-      title: "Card 4",
-      description: "This is a description for card 4.",
-      imageSrc: "https://via.placeholder.com/400x200",
-    },
-  ];
-
-  useEffect(() => {
-    // Simulate a data fetch
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
 
   const navigate = useNavigate();
 
@@ -93,6 +57,17 @@ function Resources({ title }) {
         )}
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {resourcesData && resourcesData.length === 0 && (
+          <Alert variant="destructive" className="lg:md:w-[600px]">
+            <BadgeInfo className="h-4 w-4" />
+            <AlertTitle>No Resources Available!</AlertTitle>
+            <AlertDescription>
+              No resources have been shared at the moment. Please check back
+              later.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {isLoading
           ? Array((resourcesData ?? []).length)
               .fill(0)
@@ -123,26 +98,16 @@ function Resources({ title }) {
                   </CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 flex justify-center">
-                  {user?.userType === "Student" && (
-                    <Button size="sm">
-                      <ShoppingBasket className="h-4 w-4 mr-2" /> Buy
-                    </Button>
-                  )}
-                  {user?.userType === "Teacher" && (
-                    <Button size="sm">
-                      <UserCheck className="h-4 w-4 mr-2" /> Assign
-                    </Button>
-                  )}
-                  {user?.userType === "Admin" && (
-                    <Button
-                      size="sm"
-                      onClick={() =>
-                        navigate(`/dashboard/resource-details/${card.id}`)
-                      }
-                    >
-                      <BookOpenText className="h-4 w-4 mr-2" /> View Details
-                    </Button>
-                  )}
+                  {/* {user?.userType === "Admin" && ( */}
+                  <Button
+                    size="sm"
+                    onClick={() =>
+                      navigate(`/dashboard/resource-details/${card.id}`)
+                    }
+                  >
+                    <BookOpenText className="h-4 w-4 mr-2" /> View Details
+                  </Button>
+                  {/* )} */}
                 </CardFooter>
               </Card>
             ))}
