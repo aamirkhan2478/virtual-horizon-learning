@@ -18,6 +18,8 @@ import Resources from "./pages/Resources";
 import AddResource from "./pages/AddResource";
 import ResourceDetails from "./pages/ResourceDetails";
 import VideoPage from "./pages/VideoPage";
+import SuccessPayment from "./pages/SuccessPayment";
+import CancelPayment from "./pages/CancelPayment";
 
 const App = () => {
   return (
@@ -72,6 +74,8 @@ const App = () => {
               path="/dashboard/video-page/:id"
               element={<VideoPage title="Video Page" />}
             />
+            <Route path="/dashboard/success" element={<SuccessPayment />} />
+            <Route path="/dashboard/cancel" element={<CancelPayment />} />
           </Route>
         </Route>
       </Routes>

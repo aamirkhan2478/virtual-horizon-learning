@@ -73,8 +73,8 @@ function AddResource({ title }) {
     formData.append("type", selectedType);
 
     if (selectedType === "Video") {
-      covertArray.forEach((video) => {
-        formData.append("video", video);
+      covertArray.map((video) => {
+        formData.append("videos", video);
       });
     } else {
       formData.append("pdf", resource.pdf[0]);

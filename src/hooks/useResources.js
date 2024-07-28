@@ -50,6 +50,18 @@ const updateResource = async (id, values) => {
   return data;
 };
 
+const makePayment = async (values) => {
+  const token = localStorage.getItem("token");
+  const {
+    data: { id },
+  } = await axios.post(`/resource/payment`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return id;
+};
+
 export const useGetResource = (id) => {
   return useQuery(["resource", id], () => getResource(id));
 };
@@ -68,6 +80,13 @@ export const useGetResources = () => {
 
 export const useCreateResource = (onSuccess, onError) => {
   return useMutation(createResource, {
+    onSuccess,
+    onError,
+  });
+};
+
+export const useMakePayment = (onSuccess, onError) => {
+  return useMutation(makePayment, {
     onSuccess,
     onError,
   });

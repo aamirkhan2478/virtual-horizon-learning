@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useGetResource } from "@/hooks/useResources";
 import { Video } from "reactjs-media";
+import PropTypes from "prop-types";
 
 function VideoPage({ title }) {
   useEffect(() => {
@@ -98,5 +99,10 @@ function VideoPage({ title }) {
     </div>
   );
 }
+
+// props validation
+VideoPage.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default VideoPage;

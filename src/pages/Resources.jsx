@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useGetResources } from "@/hooks/useResources";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import PropTypes from "prop-types";
 
 function Resources({ title }) {
   useEffect(() => {
@@ -26,7 +27,6 @@ function Resources({ title }) {
   }, [title]);
 
   const { data: resourcesData, isLoading } = useGetResources();
-  console.log(resourcesData);
 
   const navigate = useNavigate();
 
@@ -96,9 +96,9 @@ function Resources({ title }) {
                         (card.description.split(" ").length > 10 ? "..." : "")
                       : ""}
                   </CardDescription>
+                  <CardDescription>PKR {card?.price || 0}</CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 flex justify-center">
-                  {/* {user?.userType === "Admin" && ( */}
                   <Button
                     size="sm"
                     onClick={() =>
@@ -107,7 +107,6 @@ function Resources({ title }) {
                   >
                     <BookOpenText className="h-4 w-4 mr-2" /> View Details
                   </Button>
-                  {/* )} */}
                 </CardFooter>
               </Card>
             ))}
@@ -115,5 +114,10 @@ function Resources({ title }) {
     </>
   );
 }
+
+// props validation
+Resources.propTypes = {
+  title: PropTypes.string,
+};
 
 export default Resources;

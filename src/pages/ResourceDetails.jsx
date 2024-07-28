@@ -6,9 +6,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useGetResource } from "@/hooks/useResources";
-import { ArrowRight, ShoppingBasket, UserCheck } from "lucide-react";
-import React, { useEffect } from "react";
+import { ArrowRight, UserCheck } from "lucide-react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+import PaymentButton from "@/components/PaymentButton";
 
 function ResourceDetails({ title }) {
   useEffect(() => {
@@ -17,7 +19,7 @@ function ResourceDetails({ title }) {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   const Resources = () => {
     // Navigate Resources Page
     navigate("/dashboard/resources");
@@ -27,16 +29,12 @@ function ResourceDetails({ title }) {
     // Navigate Resources Page
     navigate(`/dashboard/video-page/${id}`);
   };
-  
+
   const { data, isLoading } = useGetResource(id);
-  console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  // Generate a random price between 100 and 1000
-  const randomPrice = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -70,7 +68,7 @@ function ResourceDetails({ title }) {
             </div>
             <div className="flex flex-col items-start md:items-end">
               <span className="text-sm font-medium text-gray-500">
-                Price: {randomPrice} PKR
+                Price: {data.price} PKR
               </span>
               {data.type === "PDF" ? (
                 <Button
@@ -86,9 +84,11 @@ function ResourceDetails({ title }) {
               ) : null}
 
               {user?.userType === "Student" && (
-                <Button size="sm" className="mt-4">
-                  <ShoppingBasket className="h-4 w-4 mr-2" /> Buy
-                </Button>
+                <PaymentButton
+                  amount={data?.price}
+                  userId={user.id}
+                  resourceId={data.id}
+                />
               )}
               {user?.userType === "Teacher" && (
                 <Button size="sm" className="mt-4">
@@ -102,5 +102,10 @@ function ResourceDetails({ title }) {
     </>
   );
 }
+
+// props validation
+ResourceDetails.propTypes = {
+  title: PropTypes.string,
+};
 
 export default ResourceDetails;
