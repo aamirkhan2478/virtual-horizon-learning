@@ -59,7 +59,7 @@ const PaymentButton = ({ userId, resourceId, amount }) => {
   }
   return (
     <>
-      <Button onClick={handleSubmit} disable={isLoading}>
+      <Button onClick={handleSubmit} disable={isLoading} className="mt-4">
         {isLoading ? (
           <>
             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />

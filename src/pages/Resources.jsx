@@ -96,7 +96,9 @@ function Resources({ title }) {
                         (card.description.split(" ").length > 10 ? "..." : "")
                       : ""}
                   </CardDescription>
-                  <CardDescription>PKR {card?.price || 0}</CardDescription>
+                  <CardDescription className="mt-3 font-medium">
+                    PKR {card?.price || 500}
+                  </CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 flex justify-center">
                   <Button
