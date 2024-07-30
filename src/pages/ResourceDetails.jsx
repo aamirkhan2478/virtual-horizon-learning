@@ -100,7 +100,6 @@ function ResourceDetails({ title }) {
               {user?.userType === "Student" && !data.isBuyer && (
                 <PaymentButton
                   amount={data?.price}
-                  userId={user.id}
                   resourceId={data.id}
                 />
               )}
