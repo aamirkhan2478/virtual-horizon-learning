@@ -68,29 +68,33 @@ function ResourceDetails({ title }) {
             </div>
             <div className="flex flex-col items-start md:items-end">
               <span className="text-sm font-medium text-gray-500">
-                Price: {data.price || 500} PKR
+                Price: {data.price} PKR
               </span>
-              {/* {data.type === "PDF" ? (
-                <Button
-                  className="mt-4"
-                  onClick={() => window.open(data.pdf, "_blank")}
-                >
-                  Get Started
-                </Button>
-              ) : data.type === "Video" ? (
-                <Button className="mt-4" onClick={videoPage}>
-                  Get Started
-                </Button>
-              ) : null} */}
 
-              {user?.userType === "Student" && (
+              {(user?.userType === "Teacher" && data.isAssigned) ||
+                (user?.userType === "Student" && data.isBuyer) ||
+                (user?.userType === "Admin" && (
+                  <Button
+                    className="mt-4"
+                    onClick={
+                      data.type === "PDF"
+                        ? () => window.open(data.pdf, "_blank")
+                        : videoPage
+                    }
+                  >
+                    Get Started
+                  </Button>
+                ))}
+
+              {user?.userType === "Student" && !data.isBuyer && (
                 <PaymentButton
-                  amount={data?.price || 500}
+                  amount={data?.price}
                   userId={user.id}
                   resourceId={data.id}
                 />
               )}
-              {user?.userType === "Teacher" && (
+
+              {user?.userType === "Teacher" && !data.isAssigned && (
                 <Button size="sm" className="mt-4">
                   <UserCheck className="h-4 w-4 mr-2" /> Assign
                 </Button>

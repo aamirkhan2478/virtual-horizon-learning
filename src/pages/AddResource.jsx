@@ -69,6 +69,7 @@ function AddResource({ title }) {
     const formData = new FormData();
     formData.append("title", resource.title);
     formData.append("description", resource.description);
+    formData.append("price", resource.price);
     formData.append("thumbnail", resource.thumbnail[0]);
     formData.append("type", selectedType);
 

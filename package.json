@@ -31,6 +31,7 @@
     "lucide-react": "^0.401.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.3.1",
     "react-player": "^2.16.0",
     "react-query": "^3.39.3",
