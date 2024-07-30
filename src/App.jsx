@@ -74,8 +74,14 @@ const App = () => {
               path="/dashboard/video-page/:id"
               element={<VideoPage title="Video Page" />}
             />
-            <Route path="/dashboard/success" element={<SuccessPayment />} />
-            <Route path="/dashboard/cancel" element={<CancelPayment />} />
+            <Route
+              path="/dashboard/success"
+              element={<SuccessPayment title={"Success Payment"} />}
+            />
+            <Route
+              path="/dashboard/cancel"
+              element={<CancelPayment title="Cancel Payment" />}
+            />
           </Route>
         </Route>
       </Routes>

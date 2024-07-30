@@ -68,9 +68,9 @@ function ResourceDetails({ title }) {
             </div>
             <div className="flex flex-col items-start md:items-end">
               <span className="text-sm font-medium text-gray-500">
-                Price: {data.price} PKR
+                Price: {data.price || 500} PKR
               </span>
-              {data.type === "PDF" ? (
+              {/* {data.type === "PDF" ? (
                 <Button
                   className="mt-4"
                   onClick={() => window.open(data.pdf, "_blank")}
@@ -81,11 +81,11 @@ function ResourceDetails({ title }) {
                 <Button className="mt-4" onClick={videoPage}>
                   Get Started
                 </Button>
-              ) : null}
+              ) : null} */}
 
               {user?.userType === "Student" && (
                 <PaymentButton
-                  amount={data?.price}
+                  amount={data?.price || 500}
                   userId={user.id}
                   resourceId={data.id}
                 />
