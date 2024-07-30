@@ -97,7 +97,7 @@ function Resources({ title }) {
                       : ""}
                   </CardDescription>
                   <CardDescription className="mt-3 font-medium">
-                    PKR {card?.price || 500}
+                    PKR {card?.price}
                   </CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 flex justify-center">

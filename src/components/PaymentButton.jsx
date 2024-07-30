@@ -6,7 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { ShoppingBasket } from "lucide-react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
-const PaymentButton = ({ userId, resourceId, amount }) => {
+const PaymentButton = ({ resourceId, amount }) => {
   const { mutate, isLoading } = useMakePayment(onSuccess, onError);
   const { toast } = useToast();
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -15,7 +15,7 @@ const PaymentButton = ({ userId, resourceId, amount }) => {
     try {
       // Create payment intent on the server
       mutate(
-        { userId, resourceId, amount },
+        { resourceId, amount },
         {
           onSuccess: async (data) => {
             const id = data;

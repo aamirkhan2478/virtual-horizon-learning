@@ -38,6 +38,19 @@ function ResourceDetails({ title }) {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const checkPermission = () => {
+    if (user.userType === "Student" && data.isBuyer) {
+      return true;
+    }
+
+    if (user.userType === "Teacher" && data.isAssigned) {
+      return true;
+    }
+
+    if (user.userType === "Admin") {
+      return true;
+    }
+  };
   return (
     <>
       <div className="flex items-center justify-between">
@@ -71,20 +84,18 @@ function ResourceDetails({ title }) {
                 Price: {data.price} PKR
               </span>
 
-              {(user?.userType === "Teacher" && data.isAssigned) ||
-                (user?.userType === "Student" && data.isBuyer) ||
-                (user?.userType === "Admin" && (
-                  <Button
-                    className="mt-4"
-                    onClick={
-                      data.type === "PDF"
-                        ? () => window.open(data.pdf, "_blank")
-                        : videoPage
-                    }
-                  >
-                    Get Started
-                  </Button>
-                ))}
+              {checkPermission() && (
+                <Button
+                  className="mt-4"
+                  onClick={
+                    data?.type === "PDF"
+                      ? () => window.open(data.pdf, "_blank")
+                      : videoPage
+                  }
+                >
+                  Get Started
+                </Button>
+              )}
 
               {user?.userType === "Student" && !data.isBuyer && (
                 <PaymentButton
