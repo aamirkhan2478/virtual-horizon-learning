@@ -1,34 +1,49 @@
 import { Route, Routes } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-import Login from "../src/pages/Login";
-import Register from "../src/pages/Register";
-import VerifyEmail from "./pages/VerifyEmail";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResendEmail from "./pages/ResendEmail";
-import ResetPassword from "./pages/ResetPassword";
+import { Toaster } from "@/Layouts/Dashboard/components/ui/toaster";
+import Login from "./Layouts/Dashboard/pages/Login";
+import Register from "./Layouts/Dashboard/pages/Register";
+import VerifyEmail from "./Layouts/Dashboard/pages/VerifyEmail";
+import ForgotPassword from "./Layouts/Dashboard/pages/ForgotPassword";
+import ResendEmail from "./Layouts/Dashboard/pages/ResendEmail";
+import ResetPassword from "./Layouts/Dashboard/pages/ResetPassword";
 import {
   DashboardProtected,
   LoginProtected,
-} from "./components/ProtectedRoute";
-import AuthLayout from "./pages/AuthLayout";
-import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import DashboardLayout from "./pages/DashboardLayout";
-import Resources from "./pages/Resources";
-import AddResource from "./pages/AddResource";
-import ResourceDetails from "./pages/ResourceDetails";
-import VideoPage from "./pages/VideoPage";
-import SuccessPayment from "./pages/SuccessPayment";
-import CancelPayment from "./pages/CancelPayment";
+} from "./Layouts/Dashboard/components/ProtectedRoute";
+import AuthLayout from "./Layouts/Dashboard/pages/AuthLayout";
+import Dashboard from "./Layouts/Dashboard/pages/Dashboard";
+import Profile from "./Layouts/Dashboard/pages/Profile";
+import DashboardLayout from "./Layouts/Dashboard/pages/DashboardLayout";
+import Resources from "./Layouts/Dashboard/pages/Resources";
+import AddResource from "./Layouts/Dashboard/pages/AddResource";
+import ResourceDetails from "./Layouts/Dashboard/pages/ResourceDetails";
+import VideoPage from "./Layouts/Dashboard/pages/VideoPage";
+import SuccessPayment from "./Layouts/Dashboard/pages/SuccessPayment";
+import CancelPayment from "./Layouts/Dashboard/pages/CancelPayment";
+import MainLayout from "./Layouts/Main";
+import { Home } from "./Layouts/Main/pages/Home";
+import { About } from "./Layouts/Main/pages/About";
+import { Courses } from "./Layouts/Main/pages/Courses";
+import { Instructor } from "./Layouts/Main/pages/Instructor";
+import { Blog } from "./Layouts/Main/pages/Blog";
+import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
 
 const App = () => {
   return (
     <>
       <Toaster />
       <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/instructor" element={<Instructor />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/single-blog" element={<BlogSinglePage />} />
+        </Route>
         <Route element={<LoginProtected />}>
           <Route element={<AuthLayout />}>
-            <Route index element={<Login title="Login" />} />
+            <Route path="/login" element={<Login title="Login" />} />
             <Route path="/register" element={<Register title="Register" />} />
             <Route
               path="/verify/:token"
