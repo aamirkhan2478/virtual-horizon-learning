@@ -38,6 +38,9 @@ function VideoPage({ title }) {
     }
   }, [data]);
 
+  const videos = data?.videos.split(",");
+  console.log("videos", videos);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -61,13 +64,13 @@ function VideoPage({ title }) {
         <div className="flex-1">
           <Card className="h-full">
             <CardContent className="p-0 h-full">
-              {data.videos.length > 0 && (
+              {videos.length > 0 && (
                 <Video
                   key={currentVideoIndex} // Unique key to force re-mount
-                  src={data.videos[currentVideoIndex]}
+                  src={videos[currentVideoIndex]}
                   poster={data.thumbnail}
                   controls={true}
-                  className="w-full h-full shadow rounded"
+                  className="w-full h-full rounded"
                 />
               )}
             </CardContent>
@@ -79,7 +82,7 @@ function VideoPage({ title }) {
         >
           <h2 className="text-lg font-semibold mb-2">Playlist</h2>
           <div className="flex flex-col space-y-4">
-            {data.videos.map((videoSrc, index) => (
+            {videos.map((videoSrc, index) => (
               <div
                 key={index}
                 onClick={() => handleVideoSelect(index)}
