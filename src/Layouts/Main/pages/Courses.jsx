@@ -12,8 +12,7 @@ export const Courses = () => {
         <div className="w-4/5 m-auto">
           <div className="heading mb-16">
             <h1 className="text-3xl font-semibold text-black">
-              Find The Right <br />
-              Online Course For You
+              Find The Right Online Course For You
             </h1>
             <span className="text-sm mt-2 block">
               you don't have to struggle alone, you've got our assistance and
@@ -32,17 +31,17 @@ export const Courses = () => {
                     alt=""
                     className="rounded-t-lg object-cover w-full h-full transition ease-in-out delay-150 cursor-pointer hover:scale-125 duration-300"
                   />
-                  <div className="categ flex gap-4 absolute top-0 m-3">
+                  {/* <div className="categ flex gap-4 absolute top-0 m-3">
                     <span className="text-[14px] bg-blue-700 p-1 px-3 text-white rounded-[5px] shadow-md">
                       Finance
                     </span>
                     <span className="text-[14px] bg-pink-700 p-1 px-3 text-white rounded-[5px] shadow-md">
                       Lifestyle
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="text p-3">
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <FaBook />
                       <span className="text-[14px] ml-2"> 10 lessons</span>
@@ -51,7 +50,7 @@ export const Courses = () => {
                       <AiFillStar className="text-orange-500" />
                       <span className="text-[14px] ml-2"> 4.50(2)</span>
                     </div>
-                  </div>
+                  </div> */}
                   <h3 className="text-black my-4 font-medium h-10">
                     {item.title}
                   </h3>
@@ -68,7 +67,7 @@ export const Courses = () => {
                   to="/"
                   className="flex items-center justify-between border-t border-gray-200 p-3"
                 >
-                  <span className="text-sm text-primary1">Free</span>
+                  <span className="text-sm text-primary1">PKR 5000</span>
                   <NavLink className="text-[14px] ml-2 flex items-center">
                     Know Details <HiOutlineArrowNarrowRight />
                   </NavLink>

@@ -19,11 +19,11 @@ export const LinkData = [
     title: "Instructor",
     url: "/instructor",
   },
-  {
-    id: 5,
-    title: "blog",
-    url: "/blog",
-  },
+  // {
+  //   id: 5,
+  //   title: "blog",
+  //   url: "/blog",
+  // },
 ]
 export const courses = [
   {

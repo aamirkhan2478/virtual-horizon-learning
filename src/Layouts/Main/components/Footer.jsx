@@ -17,33 +17,20 @@ export const Footer = () => {
           </div>
 
           <li>
-            <h4 className="text-black text-sm font-semibold mb-5">Company</h4>
-            <NavLink to="#" className=" text-[14px] block mb-2 ">
-              Contact
+            <h4 className="text-black text-sm font-semibold mb-5">
+              Quick Links
+            </h4>
+            <NavLink to="/about" className=" text-[14px] block mb-2 ">
+              About
             </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Portfolio
+            <NavLink to="/courses " className=" text-[14px] block mb-2">
+              Courses
             </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Blog
-            </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Our team
-            </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Blog
-            </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Get in Touch
-            </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              FAQ
-            </NavLink>
-            <NavLink to="#" className=" text-[14px] block mb-2">
-              Latest news
+            <NavLink to="/instructor" className=" text-[14px] block mb-2">
+              Instructor
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <h4 className="text-black text-sm font-semibold mb-5">Platform</h4>
             <NavLink to="#" className=" text-[14px] block mb-2">
               Shop
@@ -57,8 +44,8 @@ export const Footer = () => {
             <NavLink to="#" className=" text-[14px] block mb-2">
               Landing
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <h4 className="text-black text-sm font-semibold mb-5">Subscribe</h4>
             <NavLink to="#" className=" text-[14px] block mb-2">
               About us
@@ -72,7 +59,7 @@ export const Footer = () => {
             <NavLink to="#" className=" text-[14px] block mb-2">
               Services
             </NavLink>
-          </li>
+          </li> */}
         </div>
       </footer>
     </>
