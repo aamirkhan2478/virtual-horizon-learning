@@ -11,6 +11,16 @@ const getNotifications = async () => {
   return data;
 };
 
+const getNotification = async (id) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(`/notification/${id}/show`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
 const createNotification = async (values) => {
   const token = localStorage.getItem("token");
   const { data } = await axios.post("/notification/create", values, {
@@ -23,7 +33,7 @@ const createNotification = async (values) => {
 
 const markNotificationAsRead = async (id) => {
   const token = localStorage.getItem("token");
-  const { data } = await axios.put(`/notification/${id}/read`, {
+  const { data } = await axios.patch(`/notification/${id}/read`, null, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -41,8 +51,22 @@ const deleteNotification = async (id) => {
   return data;
 };
 
+const clearNotifications = async () => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.delete("/notification/clear", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
 export const useNotifications = () => {
   return useQuery("notifications", getNotifications);
+};
+
+export const useGetNotification = (id) => {
+  return useQuery(["notification", id], () => getNotification(id));
 };
 
 export const useCreateNotification = (onSuccess, onError) => {
@@ -61,6 +85,13 @@ export const useMarkNotificationAsRead = (onSuccess, onError) => {
 
 export const useDeleteNotification = (onSuccess, onError) => {
   return useMutation(deleteNotification, {
+    onSuccess,
+    onError,
+  });
+};
+
+export const useClearNotifications = (onSuccess, onError) => {
+  return useMutation(clearNotifications, {
     onSuccess,
     onError,
   });

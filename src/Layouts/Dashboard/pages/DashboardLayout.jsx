@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { BookMarked, Home, School, PanelLeft, UserCog } from "lucide-react";
 import {
@@ -16,9 +16,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/Layouts/Dashboard/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/Layouts/Dashboard/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/Layouts/Dashboard/components/ui/sheet";
 import { useToast } from "@/Layouts/Dashboard/components/ui/use-toast";
 import PropTypes from "prop-types";
+import Notification from "../components/Notification";
 
 const DashboardLayout = ({ title }) => {
   const navigate = useNavigate();
@@ -79,7 +84,7 @@ const DashboardLayout = ({ title }) => {
                 className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base ${getLinkClass("/dashboard")}`}
               >
                 <School className="font-bold h-5 w-5 transition-all group-hover:scale-110" />
-                <span className="sr-only">Virtual Horizan Learning</span>
+                <span className="sr-only">Virtual Horizon Learning</span>
               </Link>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -144,7 +149,7 @@ const DashboardLayout = ({ title }) => {
                     className={`group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base ${getLinkClass("/dashboard")}`}
                   >
                     <School className="h-5 w-5 transition-all group-hover:scale-110" />
-                    <span className="sr-only">Virtual Horizan Learning</span>
+                    <span className="sr-only">Virtual Horizon Learning</span>
                   </Link>
                   <Link
                     to={"/dashboard"}
@@ -166,7 +171,8 @@ const DashboardLayout = ({ title }) => {
               </SheetContent>
             </Sheet>
             <div className="relative ml-auto flex-1 md:grow-0"></div>
-            <nav className="items-center md:flex">
+            <nav className="items-center flex">
+              {user.userType === "Admin" && <Notification />}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
