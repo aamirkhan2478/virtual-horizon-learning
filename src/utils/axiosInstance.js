@@ -6,8 +6,6 @@ const axios = Axios.create({
   baseURL,
 });
 
-axios.defaults.withCredentials = true;
-
 axios.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
@@ -17,7 +15,7 @@ axios.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    // console.log('Error: ', error.message);
+    // console.log("Error: ", error);
     if (error.response.status === 401) {
       localStorage.removeItem("user");
       localStorage.removeItem("token");

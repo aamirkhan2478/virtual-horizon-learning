@@ -20,6 +20,7 @@ import ResourceDetails from "./Layouts/Dashboard/pages/ResourceDetails";
 import VideoPage from "./Layouts/Dashboard/pages/VideoPage";
 import SuccessPayment from "./Layouts/Dashboard/pages/SuccessPayment";
 import CancelPayment from "./Layouts/Dashboard/pages/CancelPayment";
+import Room from "./Layouts/Dashboard/pages/Room";
 import MainLayout from "./Layouts/Main";
 import { Home } from "./Layouts/Main/pages/Home";
 import { About } from "./Layouts/Main/pages/About";
@@ -27,6 +28,7 @@ import { Courses } from "./Layouts/Main/pages/Courses";
 import { Instructor } from "./Layouts/Main/pages/Instructor";
 import { Blog } from "./Layouts/Main/pages/Blog";
 import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
+import ScheduleMeeting from "./Layouts/Dashboard/pages/ScheduleMeeting";
 
 const App = () => {
   return (
@@ -97,7 +99,9 @@ const App = () => {
               path="/dashboard/cancel"
               element={<CancelPayment title="Cancel Payment" />}
             />
+            <Route path="/dashboard/schedule/:notification_id" element={<ScheduleMeeting title="Schedule Meeting" />} />
           </Route>
+          <Route path="/room/:id" element={<Room title="Video Room" />} />
         </Route>
       </Routes>
     </>
