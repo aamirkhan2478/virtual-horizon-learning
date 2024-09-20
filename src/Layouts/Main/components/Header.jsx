@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import LogoImg from "../assets/images/logo-black.png";
+import LogoImg from "../assets/images/vhl_logo.jpg";
 import { LinkData } from "../assets/data/dummydata";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { LayoutDashboard, LogIn } from "lucide-react";
 
@@ -17,7 +17,7 @@ export const Header = () => {
         <div className="container flex justify-between items-center">
           <div className="logo flex items-center gap-6">
             <NavLink to="/">
-              <img src={LogoImg} alt="logo" className="h-5" />
+              <img src={LogoImg} alt="logo" className="h-15 w-20" />
             </NavLink>
           </div>
           <nav className={open ? "mobile-view" : "desktop-view"}>

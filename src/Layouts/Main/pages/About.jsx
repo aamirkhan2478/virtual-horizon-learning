@@ -87,29 +87,25 @@ export const AboutContent = () => {
         <div className="right w-2/3 md1:w-full md1:mt-16">
           <div className="heading w-4/5 md1:w-full">
             <h1 className="text-3xl font-semibold text-black">
-              Achieve Your Goals With Educal
+              Achieve Your Goals with Virtual Horizon Learning
             </h1>
             <span className="text-sm mt-2 block leading-6">
               {" "}
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              officia, reiciendis sapiente adipisci nulla non consequuntur eos
-              repellendus laborum veritatis obcaecati neque est id porro
-              voluptatum. Fuga iure nulla cum. Lost the plot bobby such a fibber
-              bleeding bits and bobs don't get shirty with me bugger all mate
-              chinwag super pukka william barney, horse play buggered.
+              Unlock endless opportunities and take your learning to the next
+              level. we've got courses to fit your needs.
             </span>
             <ul className="my-5">
               <li className="text-sm flex items-center gap-5">
-                <AiOutlineCheck className="text-green-500" /> Upskill your
-                organization.
+                <AiOutlineCheck className="text-green-500" />
+                Upskill with confidence
               </li>
               <li className="text-sm flex items-center gap-5 my-2">
                 <AiOutlineCheck className="text-green-500" />
-                Access more then 100K online courses
+                Access over 100,000 online courses
               </li>
               <li className="text-sm flex items-center gap-5">
                 <AiOutlineCheck className="text-green-500" />
-                Learn the latest skills
+                Learn the latest skills and stay ahead of the curve
               </li>
             </ul>
             {/* <button className="px-5 py-2 border border-gray-300 rounded-md text-sm">
