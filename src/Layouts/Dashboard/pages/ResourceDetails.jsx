@@ -136,6 +136,11 @@ function ResourceDetails({ title }) {
               <div className="bg-gray-100 p-4 rounded-lg">
                 <h2 className="text-xl font-semibold mb-2">Teacher</h2>
                 <div className="flex items-center space-x-4">
+                  <img
+                    src={data?.assignTeacherPic}
+                    alt={data?.assignTeacher}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
                   <div>
                     <h3 className="text-lg font-semibold">
                       {data?.assignTeacher}
@@ -144,28 +149,23 @@ function ResourceDetails({ title }) {
                       {data?.assignTeacherEmail}
                     </p>
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Conditional Student Meeting Request */}
-            {user.userType === "Student" && data.isBuyer && (
-              <>
-                <Button
-                  className="mt-3"
-                  onClick={sendNotificationToAdmin}
-                  disabled={data.status && data.status === "pending"}
-                >
-                  {sendingNotification ? (
+                  {user.userType === "Student" && data.isBuyer && (
                     <>
-                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                      Please wait
-                    </>
-                  ) : (
-                    "Request a meeting"
-                  )}
-                </Button>
-                <p className="mt-5">
+                      <Button
+                        className="mt-3"
+                        onClick={sendNotificationToAdmin}
+                        disabled={data.status && data.status === "pending"}
+                      >
+                        {sendingNotification ? (
+                          <>
+                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                          </>
+                        ) : (
+                          "Request a meeting"
+                        )}
+                      </Button>
+                      {/* <p className="mt-5">
                   {data.status && data.status === "pending" ? (
                     <span className="text-yellow-300">
                       Please wait for response from Admin
@@ -181,9 +181,14 @@ function ResourceDetails({ title }) {
                       meeting again.
                     </span>
                   )}
-                </p>
-              </>
+                </p> */}
+                    </>
+                  )}
+                </div>
+              </div>
             )}
+
+            {/* Conditional Student Meeting Request */}
 
             {/* Call to Action */}
             {checkPermission() && (
@@ -217,7 +222,7 @@ function ResourceDetails({ title }) {
             <img
               src={data?.thumbnail}
               alt={`${data?.title} thumbnail`}
-              className="w-full h-64 object-cover rounded-lg shadow-md"
+              className="w-full h-full object-cover rounded-lg shadow-md"
             />
           </div>
         </div>

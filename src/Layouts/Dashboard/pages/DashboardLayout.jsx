@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { BookMarked, Home, School, PanelLeft, UserCog } from "lucide-react";
+import {
+  BookMarked,
+  Home,
+  School,
+  PanelLeft,
+  UserCog,
+  BookCheck,
+  BookCopy,
+} from "lucide-react";
 import {
   TooltipProvider,
   Tooltip,
@@ -110,6 +118,34 @@ const DashboardLayout = ({ title }) => {
                 </TooltipTrigger>
                 <TooltipContent side="right">Resources</TooltipContent>
               </Tooltip>
+              {user.userType === "Teacher" && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/dashboard/add-quiz"
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard/add-quiz")} ${getActiveBg("/dashboard/add-quiz")}`}
+                    >
+                      <BookCheck className="h-5 w-5" />
+                      <span className="sr-only">Create Quiz</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">Create Quiz</TooltipContent>
+                </Tooltip>
+              )}
+              {user.userType === "Student" && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/dashboard/quiz"
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard/quiz")} ${getActiveBg("/dashboard/quiz")}`}
+                    >
+                      <BookCopy className="h-5 w-5" />
+                      <span className="sr-only">Quiz</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">Quiz</TooltipContent>
+                </Tooltip>
+              )}
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-4">
               <Tooltip>
@@ -167,6 +203,26 @@ const DashboardLayout = ({ title }) => {
                     <BookMarked className="h-5 w-5" />
                     Resources
                   </Link>
+                  {user.userType === "Teacher" && (
+                    <Link
+                      to="/dashboard/add-quiz"
+                      onClick={handleLinkClick}
+                      className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard/add-quiz")}`}
+                    >
+                      <BookCheck className="h-5 w-5" />
+                      Create Quiz
+                    </Link>
+                  )}
+                  {user.userType === "Student" && (
+                    <Link
+                      to="/dashboard/quiz"
+                      onClick={handleLinkClick}
+                      className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard/quiz")}`}
+                    >
+                      <BookCopy className="h-5 w-5" />
+                      Quiz
+                    </Link>
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>

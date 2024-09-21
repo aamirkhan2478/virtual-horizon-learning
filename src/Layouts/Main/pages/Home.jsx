@@ -1,13 +1,12 @@
-import React from "react";
 import heroImg from "../assets/images/hero.png";
 import heroImgback from "../assets/images/hero-shape-purple.png";
-import { FiSearch } from "react-icons/fi";
+// import { FiSearch } from "react-icons/fi";
 import { BsFillLightningChargeFill } from "react-icons/bs";
 import { FaBookReader, FaGraduationCap, FaUsers } from "react-icons/fa";
 import { About } from "./About";
 import { Courses } from "./Courses";
 import { Instructor } from "./Instructor";
-import { Blog } from "./Blog";
+// import { Blog } from "./Blog";
 
 export const Home = () => {
   return (
@@ -37,7 +36,7 @@ export const HomeContent = () => {
                 Get unlimited access to over 60+ expert instructors.
               </h3>
               <span className="text-[14px]">
-                You're guaranteed to find the perfect course for your academic
+                You&apos;re guaranteed to find the perfect course for your academic
                 and personal growth.
               </span>
             </div>

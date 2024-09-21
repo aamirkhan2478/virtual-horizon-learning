@@ -29,6 +29,8 @@ import { Instructor } from "./Layouts/Main/pages/Instructor";
 import { Blog } from "./Layouts/Main/pages/Blog";
 import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
 import ScheduleMeeting from "./Layouts/Dashboard/pages/ScheduleMeeting";
+import CreateQuiz from "./Layouts/Dashboard/pages/CreateQuiz";
+import Quizzes from "./Layouts/Dashboard/pages/Quizzes";
 
 const App = () => {
   return (
@@ -99,7 +101,15 @@ const App = () => {
               path="/dashboard/cancel"
               element={<CancelPayment title="Cancel Payment" />}
             />
-            <Route path="/dashboard/schedule/:notification_id" element={<ScheduleMeeting title="Schedule Meeting" />} />
+            <Route
+              path="/dashboard/schedule/:notification_id"
+              element={<ScheduleMeeting title="Schedule Meeting" />}
+            />
+            <Route
+              path="/dashboard/add-quiz"
+              element={<CreateQuiz title="Add Quiz" />}
+            />
+            <Route path="/dashboard/quiz" element={<Quizzes title="Quiz" />} />
           </Route>
           <Route path="/room/:id" element={<Room title="Video Room" />} />
         </Route>

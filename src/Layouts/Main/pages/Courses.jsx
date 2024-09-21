@@ -1,5 +1,4 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { useGetCourses } from "@/hooks/useResources";
 
@@ -8,15 +7,7 @@ export const Courses = () => {
   const navigate = useNavigate();
 
   const handleDetailsClick = (courseId) => {
-    const user = localStorage.getItem("user");
-
-    if (user) {
-      // Navigate to course details if user is found
-      navigate(`/dashboard/resource-details/${courseId}`);
-    } else {
-      // Redirect to login if no user is found
-      navigate("/login");
-    }
+    navigate(`/dashboard/resource-details/${courseId}`);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -31,8 +22,8 @@ export const Courses = () => {
               Find The Right Online Course For You
             </h1>
             <span className="text-sm mt-2 block">
-              you don't have to struggle alone, you've got our assistance and
-              help.
+              you don&apos;t have to struggle alone, you&apos;ve got our
+              assistance and help.
             </span>
           </div>
           <div className="grid grid-cols-3 gap-8 md1:grid-cols-1">
@@ -55,10 +46,19 @@ export const Courses = () => {
                   <div className="user flex items-center">
                     <img
                       className="rounded-full"
-                      src="https://secure.gravatar.com/avatar/75ec18a5bf959aab895830be3a78cb34?s=50&d=mm&r=g"
-                      alt=""
+                      src={course.teacherPic}
+                      alt="teacher"
+                      height={40}
+                      width={40}
                     />
-                    <span className="text-[14px] ml-2"> Sunil</span>
+                    <div className="flex flex-col">
+                      <span className="text-[14px] ml-2">
+                        {course.teacherName}
+                      </span>
+                      <span className="text-[14px] ml-2">
+                        {course.teacherEmail}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div
