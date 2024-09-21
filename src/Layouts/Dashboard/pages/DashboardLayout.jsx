@@ -192,7 +192,7 @@ const DashboardLayout = ({ title }) => {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel>
                     {user?.name}
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground normal-case">
                       {user?.email}
                     </p>
                   </DropdownMenuLabel>

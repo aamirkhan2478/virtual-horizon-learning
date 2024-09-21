@@ -105,3 +105,12 @@ export const useMakePayment = (onSuccess, onError) => {
 export const useAssignResource = () => {
   return useMutation(assignResource);
 };
+
+export const useGetCourses = () => {
+  return useQuery("courses", getCourses);
+};
+
+const getCourses = async () => {
+  const { data } = await axios.get(`/resource/latest`);
+  return data;
+};

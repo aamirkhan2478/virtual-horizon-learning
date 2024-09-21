@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/Layouts/Dashboard/components/ui/tooltip";
 import { useGetResource, useAssignResource } from "@/hooks/useResources";
-import { ArrowRight, UserCheck } from "lucide-react";
+import { ArrowRight, Banknote, FileText, UserCheck, Video } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -110,92 +110,115 @@ function ResourceDetails({ title }) {
       </div>
 
       {data && (
-        <div className="mt-6">
-          <img
-            src={data.thumbnail}
-            alt={`${data.title} thumbnail`}
-            className="w-full h-full object-fill mb-6 rounded shadow"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
-              <p className="text-gray-600">{data.description}</p>
-              {data.assignTeacher && (
-                <>
-                  <h2 className="mt-5 text-xl font-semibold">
-                    Teacher Details
-                  </h2>
-                  <ul className="ml-5">
-                    <li className="list-disc">{data.assignTeacher}</li>
-                    <li className="list-disc">{data.assignTeacherEmail}</li>
-                  </ul>
-                  {user.userType === "Student" && (
-                    <>
-                      <Button
-                        className="mt-3"
-                        onClick={sendNotificationToAdmin}
-                        disabled={data.status && data.status === "pending"}
-                      >
-                        {sendingNotification ? (
-                          <>
-                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                            Please wait
-                          </>
-                        ) : (
-                          "Request a meeting"
-                        )}
-                      </Button>
-                      <p className="mt-5">
-                        {data.status && data.status === "pending" ? (
-                          <span className="text-yellow-300">
-                            Please wait for response from Admin
-                          </span>
-                        ) : data.status === "approved" ? (
-                          <span className="text-green-300">
-                            Please check your email inbox for meeting details
-                          </span>
-                        ) : data.status === "approved" ? (
-                          <span className="text-red-300">
-                            Note: If you already got an email and done you
-                            meeting then ignore this message or if you
-                            haven&apos;t received email then request a meeting
-                            again
-                          </span>
-                        ) : null}
-                      </p>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="flex flex-col items-start md:items-end">
-              <span className="text-sm font-medium text-gray-500">
-                Price: {data.price} PKR
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 bg-white shadow-lg rounded-lg">
+          {/* Left Column (Details) */}
+          <div className="space-y-6">
+            <h1 className="text-3xl font-bold">{data?.title}</h1>
+            <p className="text-gray-600">{data?.description}</p>
+
+            {/* Resource Information */}
+            <div className="flex items-center space-x-4 text-sm text-gray-500">
+              <span className="flex items-center">
+                <Banknote className="mr-1" /> {data?.price} PKR
               </span>
-
-              {checkPermission() && (
-                <Button
-                  className="mt-4"
-                  onClick={
-                    data?.type === "PDF"
-                      ? () => window.open(data.pdf, "_blank")
-                      : videoPage
-                  }
-                >
-                  Get Started
-                </Button>
-              )}
-
-              {user?.userType === "Student" && !data.isBuyer && (
-                <PaymentButton amount={data?.price} resourceId={data.id} />
-              )}
-
-              {user?.userType === "Teacher" && !data.isAssigned && (
-                <Button size="sm" className="mt-4" onClick={assignResource}>
-                  <UserCheck className="h-4 w-4 mr-2" /> Assign
-                </Button>
-              )}
+              <span className="flex items-center">
+                {data?.type === "Video" ? (
+                  <Video className="mr-1 text-blue-500" />
+                ) : data?.type === "PDF" ? (
+                  <FileText className="mr-1 text-red-500" />
+                ) : null}
+                {data?.type}
+              </span>
             </div>
+
+            {/* Teacher Information */}
+            {data?.assignTeacher && (
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <h2 className="text-xl font-semibold mb-2">Teacher</h2>
+                <div className="flex items-center space-x-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">
+                      {data?.assignTeacher}
+                    </h3>
+                    <p className="text-gray-600 normal-case">
+                      {data?.assignTeacherEmail}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Conditional Student Meeting Request */}
+            {user.userType === "Student" && data.isBuyer && (
+              <>
+                <Button
+                  className="mt-3"
+                  onClick={sendNotificationToAdmin}
+                  disabled={data.status && data.status === "pending"}
+                >
+                  {sendingNotification ? (
+                    <>
+                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </>
+                  ) : (
+                    "Request a meeting"
+                  )}
+                </Button>
+                <p className="mt-5">
+                  {data.status && data.status === "pending" ? (
+                    <span className="text-yellow-300">
+                      Please wait for response from Admin
+                    </span>
+                  ) : data.status === "approved" ? (
+                    <span className="text-green-300">
+                      Please check your email inbox for meeting details
+                    </span>
+                  ) : (
+                    <span className="text-red-300">
+                      If you already received an email and completed the
+                      meeting, ignore this message. Otherwise, please request a
+                      meeting again.
+                    </span>
+                  )}
+                </p>
+              </>
+            )}
+
+            {/* Call to Action */}
+            {checkPermission() && (
+              <Button
+                className="mt-4"
+                onClick={
+                  data?.type === "PDF"
+                    ? () => window.open(data.pdf, "_blank")
+                    : videoPage
+                }
+              >
+                Get Started
+              </Button>
+            )}
+
+            {/* Payment Button for Students */}
+            {user?.userType === "Student" && !data.isBuyer && (
+              <PaymentButton amount={data?.price} resourceId={data.id} />
+            )}
+
+            {/* Assign Button for Teachers */}
+            {user?.userType === "Teacher" && !data.isAssigned && (
+              <Button size="sm" className="mt-4" onClick={assignResource}>
+                <UserCheck className="h-4 w-4 mr-2" /> Assign
+              </Button>
+            )}
+          </div>
+
+          {/* Right Column (Image) */}
+          <div className="flex justify-center items-center">
+            <img
+              src={data?.thumbnail}
+              alt={`${data?.title} thumbnail`}
+              className="w-full h-64 object-cover rounded-lg shadow-md"
+            />
           </div>
         </div>
       )}
