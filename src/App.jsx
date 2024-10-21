@@ -31,6 +31,8 @@ import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
 import ScheduleMeeting from "./Layouts/Dashboard/pages/ScheduleMeeting";
 import CreateQuiz from "./Layouts/Dashboard/pages/CreateQuiz";
 import Quizzes from "./Layouts/Dashboard/pages/Quizzes";
+import SubmitAssignment from "./Layouts/Dashboard/pages/SubmitAssignment";
+import AddAssignment from "./Layouts/Dashboard/pages/AddAssignment";
 
 const App = () => {
   return (
@@ -110,6 +112,14 @@ const App = () => {
               element={<CreateQuiz title="Add Quiz" />}
             />
             <Route path="/dashboard/quiz" element={<Quizzes title="Quiz" />} />
+            <Route
+              path="/dashboard/submit-assignment"
+              element={<SubmitAssignment title="SubmitAssignment" />}
+            />
+            <Route
+              path="/dashboard/add-assignment"
+              element={<AddAssignment title="AddAssignment" />}
+            />
           </Route>
           <Route path="/room/:id" element={<Room title="Video Room" />} />
         </Route>

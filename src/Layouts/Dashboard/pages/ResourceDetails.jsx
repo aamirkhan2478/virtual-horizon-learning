@@ -134,7 +134,7 @@ function ResourceDetails({ title }) {
             {/* Teacher Information */}
             {data?.assignTeacher && (
               <div className="bg-gray-100 p-4 rounded-lg">
-                <h2 className="text-xl font-semibold mb-2">Teacher</h2>
+                <h2 className="text-xl font-semibold mb-2">Teacher Details</h2>
                 <div className="flex items-center space-x-4">
                   <img
                     src={data?.assignTeacherPic}

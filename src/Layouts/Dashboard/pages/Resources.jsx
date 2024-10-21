@@ -85,7 +85,7 @@ function Resources({ title }) {
                   <img
                     src={card?.thumbnail}
                     alt="Card Image"
-                    className="w-full h-auto rounded-t"
+                    className="w-full h-[300px] object-cover rounded-t"
                   />
                 </CardHeader>
                 <CardContent className="p-4">

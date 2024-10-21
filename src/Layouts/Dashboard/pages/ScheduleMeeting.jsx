@@ -1,5 +1,5 @@
 import { useGetNotification } from "@/hooks/useNotification";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -19,6 +19,8 @@ import { TriangleAlert } from "lucide-react";
 
 const ScheduleMeeting = () => {
   const { notification_id } = useParams();
+  
+  const navigate = useNavigate();
 
   const { data, isLoading } = useGetNotification(notification_id);
 
@@ -64,6 +66,7 @@ const ScheduleMeeting = () => {
       description: data.message,
       className: "bg-green-500 text-white",
     });
+    navigate("/dashboard");
   }
 
   function onError(error) {

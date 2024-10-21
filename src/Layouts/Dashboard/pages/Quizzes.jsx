@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { FaClock } from "react-icons/fa";
+import { FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lock } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([
@@ -72,12 +73,18 @@ const Quizzes = () => {
   const [showResult, setShowResult] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [reviewMode, setReviewMode] = useState(false);
+
+  const handleReviewAnswers = () => {
+    setReviewMode(true);
+  };
 
   const handleNextQuestion = useCallback(() => {
     if (
-      selectedAnswer === selectedQuiz.questions[currentQuestion].correctAnswer
+      selectedAnswer[currentQuestion] ===
+      selectedQuiz.questions[currentQuestion].correctAnswer
     ) {
-      setScore(score + 1);
+      setScore((prevScore) => prevScore + 1);
     }
 
     setSelectedAnswer("");
@@ -93,7 +100,7 @@ const Quizzes = () => {
         )
       );
     }
-  }, [selectedAnswer, selectedQuiz, currentQuestion, quizzes, score]);
+  }, [selectedAnswer, selectedQuiz, currentQuestion, quizzes]);
 
   useEffect(() => {
     if (selectedQuiz && timeLeft > 0 && !showResult && !isReviewing) {
@@ -117,10 +124,15 @@ const Quizzes = () => {
   };
 
   const handleAnswerSelect = (answer) => {
-    setSelectedAnswer(answer);
+    setSelectedAnswer((prevAnswers) => ({
+      ...prevAnswers,
+      [currentQuestion]: answer,
+    }));
   };
 
   const handleReviewQuiz = () => {
+    console.log("clicked");
+
     setIsReviewing(true);
     setCurrentQuestion(0);
   };
@@ -153,7 +165,7 @@ const Quizzes = () => {
               key={index}
               onClick={() => handleAnswerSelect(option)}
               className={`w-full p-3 text-left rounded-lg ${
-                selectedAnswer === option
+                selectedAnswer[currentQuestion] === option
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 hover:bg-gray-200"
               } ${isReviewing && option === question.correctAnswer ? "bg-green-500 text-white" : ""}`}
@@ -209,10 +221,11 @@ const Quizzes = () => {
         </p>
         <div className="flex justify-center space-x-4">
           <button
-            onClick={handleReviewQuiz}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            onClick={handleReviewAnswers}
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            aria-label="View Correct answers"
           >
-            Review Answers
+            View Correct Answers
           </button>
           <button
             onClick={handleRestartQuiz}
@@ -221,6 +234,44 @@ const Quizzes = () => {
             Back to Quiz List
           </button>
         </div>
+
+
+        <Separator />
+        {reviewMode && (
+          <div className="text-left">
+            <h3 className="text-2xl font-bold mb-6">Correct Answers</h3>
+            {selectedQuiz.questions.map((question, questionIndex) => (
+              <div key={question.id} className="mb-8">
+                <h4 className="text-xl font-semibold mb-4">
+                  {question.question}
+                </h4>
+                <div className="space-y-2">
+                  {question.options.map((option, index) => (
+                    <div
+                      key={index}
+                      className={`p-3 rounded-lg ${
+                        option === question.correctAnswer
+                          ? "bg-green-100" // Highlight the correct answer in green
+                          : selectedAnswer[questionIndex] === option
+                            ? "bg-red-100" // Highlight the wrong user-selected answer in red
+                            : "bg-gray-100"
+                      }`}
+                    >
+                      {option}
+                      {option === question.correctAnswer && (
+                        <FaCheckCircle className="inline-block ml-2 text-green-500" />
+                      )}
+                      {selectedAnswer[questionIndex] === option &&
+                        option !== question.correctAnswer && (
+                          <FaTimesCircle className="inline-block ml-2 text-red-500" />
+                        )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </motion.div>
     );
   };

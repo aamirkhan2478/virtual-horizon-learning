@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { useGetCourses } from "@/hooks/useResources";
+import Loader from "@/components/Loader";
 
 export const Courses = () => {
   const { data: courses, isLoading, error } = useGetCourses();
@@ -10,7 +11,7 @@ export const Courses = () => {
     navigate(`/dashboard/resource-details/${courseId}`);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader showProgressBar={false} showMessages={false} />;
   if (error) return <div>Error fetching courses</div>;
 
   return (
@@ -51,12 +52,9 @@ export const Courses = () => {
                       height={40}
                       width={40}
                     />
-                    <div className="flex flex-col">
+                    <div className="flex flex-col normal-case">
                       <span className="text-[14px] ml-2">
                         {course.teacherName}
-                      </span>
-                      <span className="text-[14px] ml-2">
-                        {course.teacherEmail}
                       </span>
                     </div>
                   </div>

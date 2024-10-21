@@ -8,6 +8,9 @@ import {
   UserCog,
   BookCheck,
   BookCopy,
+  CloudUpload,
+  FilePlus,
+  UploadCloud,
 } from "lucide-react";
 import {
   TooltipProvider,
@@ -146,6 +149,36 @@ const DashboardLayout = ({ title }) => {
                   <TooltipContent side="right">Quiz</TooltipContent>
                 </Tooltip>
               )}
+              {user.userType === "Teacher" && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/dashboard/add-assignment"
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard/add-assignment")} ${getActiveBg("/dashboard/add-assignment")}`}
+                    >
+                      <FilePlus className="h-5 w-5" />
+                      <span className="sr-only">Add Assignment</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">Add Assignment</TooltipContent>
+                </Tooltip>
+              )}
+              {user.userType === "Student" && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to="/dashboard/submit-assignment"
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg hover:text-foreground transition-colors md:h-8 md:w-8 ${getLinkClass("/dashboard/submit-assignment")} ${getActiveBg("/dashboard/submit-assignment")}`}
+                    >
+                      <UploadCloud className="h-5 w-5" />
+                      <span className="sr-only">Submit Assignment</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    Submit Assignment
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-4">
               <Tooltip>
@@ -221,6 +254,26 @@ const DashboardLayout = ({ title }) => {
                     >
                       <BookCopy className="h-5 w-5" />
                       Quiz
+                    </Link>
+                  )}
+                  {user.userType === "Teacher" && (
+                    <Link
+                      to="/dashboard/add-assignment"
+                      onClick={handleLinkClick}
+                      className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard/Add-assignment")}`}
+                    >
+                      <FilePlus className="h-5 w-5" />
+                      Add Assignment
+                    </Link>
+                  )}
+                  {user.userType === "Student" && (
+                    <Link
+                      to="/dashboard/submit-assignment"
+                      onClick={handleLinkClick}
+                      className={`flex items-center gap-4 px-2.5 hover:text-foreground ${getLinkClass("/dashboard/submit-assignment")}`}
+                    >
+                      <CloudUpload className="h-5 w-5" />
+                      Submit Assignment
                     </Link>
                   )}
                 </nav>
