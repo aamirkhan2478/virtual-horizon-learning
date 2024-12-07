@@ -1,9 +1,8 @@
 import React from "react";
 import aboutImg from "../assets/images/about.jpg";
-import aboutImgBanner from "../assets/images/about-banner.jpg";
-import imgs from "../assets/images/join1.png";
 import { FaBookDead } from "react-icons/fa";
 import { AiOutlineCheck } from "react-icons/ai";
+import { FAQs } from "./FAQs";
 
 export const About = () => {
   return (
@@ -48,6 +47,9 @@ export const About = () => {
         </div>
       </section>
       <AboutContent />
+
+      {/* Conditionally render FAQs only on the /about page */}
+      {location.pathname === "/about" && <FAQs />}
     </>
   );
 };
@@ -71,18 +73,6 @@ export const AboutContent = () => {
       <div className="container flex md1:flex-col">
         <div className="left w-1/3 md1:w-full mr-8 md1:mr-0 relative">
           <img src={aboutImg} alt="aboutImg" className=" rounded-xl" />
-          {/* <img
-            src={aboutImgBanner}
-            alt="aboutImg"
-            className="rounded-xl absolute -bottom-14 -left-24 h-56 md1:left-80"
-          /> */}
-          {/* <div className="img-group ml-24 mt-3">
-            <img src={imgs} alt="" />
-            <span className="text-[14px]">
-              Join over <label className="text-black text-sm">4,000+</label>{" "}
-              students
-            </span>
-          </div> */}
         </div>
         <div className="right w-2/3 md1:w-full md1:mt-16">
           <div className="heading w-4/5 md1:w-full">
@@ -108,9 +98,6 @@ export const AboutContent = () => {
                 Learn the latest skills and stay ahead of the curve
               </li>
             </ul>
-            {/* <button className="px-5 py-2 border border-gray-300 rounded-md text-sm">
-              Apply Now
-            </button> */}
           </div>
         </div>
       </div>

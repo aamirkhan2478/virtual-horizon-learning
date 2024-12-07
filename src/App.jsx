@@ -23,6 +23,7 @@ import CancelPayment from "./Layouts/Dashboard/pages/CancelPayment";
 import Room from "./Layouts/Dashboard/pages/Room";
 import MainLayout from "./Layouts/Main";
 import { Home } from "./Layouts/Main/pages/Home";
+import { Contact } from "./Layouts/Main/pages/Contact";
 import { About } from "./Layouts/Main/pages/About";
 import { Courses } from "./Layouts/Main/pages/Courses";
 import { Instructor } from "./Layouts/Main/pages/Instructor";
@@ -33,6 +34,7 @@ import CreateQuiz from "./Layouts/Dashboard/pages/CreateQuiz";
 import Quizzes from "./Layouts/Dashboard/pages/Quizzes";
 import SubmitAssignment from "./Layouts/Dashboard/pages/SubmitAssignment";
 import AddAssignment from "./Layouts/Dashboard/pages/AddAssignment";
+import { FAQs } from "./Layouts/Main/pages/FAQs";
 
 const App = () => {
   return (
@@ -41,6 +43,8 @@ const App = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faqs" element={<FAQs />} />
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/instructor" element={<Instructor />} />
