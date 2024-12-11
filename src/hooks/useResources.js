@@ -114,3 +114,64 @@ const getCourses = async () => {
   const { data } = await axios.get(`/resource/latest`);
   return data;
 };
+
+const generateQuiz = (values) => {
+  const token = localStorage.getItem("token");
+  return axios.post("/resource/generate-quiz", values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const useGenerateQuiz = (onSuccess, onError) => {
+  return useMutation(generateQuiz, {
+    onSuccess,
+    onError,
+  });
+};
+
+const saveQuiz = (values) => {
+  const token = localStorage.getItem("token");
+  return axios.post("/resource/save-quiz", values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const useSaveQuiz = () => {
+  return useMutation(saveQuiz);
+};
+
+const addAssignment = (values) => {
+  const token = localStorage.getItem("token");
+  return axios.post("/resource/add-assignment", values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const useAddAssignment = (onSuccess, onError) => {
+  return useMutation(addAssignment, {
+    onSuccess,
+    onError,
+  });
+};
+
+const submitAssignment = (values) => {
+  const token = localStorage.getItem("token");
+  return axios.post("/resource/submit-assignment", values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const useSubmitAssignment = (onSuccess, onError) => {
+  return useMutation(addAssignment, {
+    onSuccess,
+    onError,
+  });
+};

@@ -121,7 +121,7 @@ const DashboardLayout = ({ title }) => {
                 </TooltipTrigger>
                 <TooltipContent side="right">Resources</TooltipContent>
               </Tooltip>
-              {user.userType === "Teacher" && (
+              {/* {user.userType === "Teacher" && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
@@ -134,8 +134,8 @@ const DashboardLayout = ({ title }) => {
                   </TooltipTrigger>
                   <TooltipContent side="right">Create Quiz</TooltipContent>
                 </Tooltip>
-              )}
-              {user.userType === "Student" && (
+              )} */}
+              {/* {user.userType === "Student" && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
@@ -148,8 +148,8 @@ const DashboardLayout = ({ title }) => {
                   </TooltipTrigger>
                   <TooltipContent side="right">Quiz</TooltipContent>
                 </Tooltip>
-              )}
-              {user.userType === "Teacher" && (
+              )} */}
+              {/* {user.userType === "Teacher" && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
@@ -162,8 +162,8 @@ const DashboardLayout = ({ title }) => {
                   </TooltipTrigger>
                   <TooltipContent side="right">Add Assignment</TooltipContent>
                 </Tooltip>
-              )}
-              {user.userType === "Student" && (
+              )} */}
+              {/* {user.userType === "Student" && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link
@@ -178,7 +178,7 @@ const DashboardLayout = ({ title }) => {
                     Submit Assignment
                   </TooltipContent>
                 </Tooltip>
-              )}
+              )} */}
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-4">
               <Tooltip>
@@ -236,7 +236,7 @@ const DashboardLayout = ({ title }) => {
                     <BookMarked className="h-5 w-5" />
                     Resources
                   </Link>
-                  {user.userType === "Teacher" && (
+                  {/* {user.userType === "Teacher" && (
                     <Link
                       to="/dashboard/add-quiz"
                       onClick={handleLinkClick}
@@ -245,8 +245,8 @@ const DashboardLayout = ({ title }) => {
                       <BookCheck className="h-5 w-5" />
                       Create Quiz
                     </Link>
-                  )}
-                  {user.userType === "Student" && (
+                  )} */}
+                  {/* {user.userType === "Student" && (
                     <Link
                       to="/dashboard/quiz"
                       onClick={handleLinkClick}
@@ -255,8 +255,8 @@ const DashboardLayout = ({ title }) => {
                       <BookCopy className="h-5 w-5" />
                       Quiz
                     </Link>
-                  )}
-                  {user.userType === "Teacher" && (
+                  )} */}
+                  {/* {user.userType === "Teacher" && (
                     <Link
                       to="/dashboard/add-assignment"
                       onClick={handleLinkClick}
@@ -275,7 +275,7 @@ const DashboardLayout = ({ title }) => {
                       <CloudUpload className="h-5 w-5" />
                       Submit Assignment
                     </Link>
-                  )}
+                  )} */}
                 </nav>
               </SheetContent>
             </Sheet>

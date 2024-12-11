@@ -15,6 +15,7 @@ import { useCreateNotification } from "@/hooks/useNotification";
 import { useQueryClient } from "react-query";
 import { toast } from "../components/ui/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import Loader from "@/components/Loader";
 
 function ResourceDetails({ title }) {
   useEffect(() => {
@@ -41,7 +42,7 @@ function ResourceDetails({ title }) {
   const { data, isLoading } = useGetResource(id);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader showMessages={false} showProgressBar={false} />;
   }
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -134,25 +135,27 @@ function ResourceDetails({ title }) {
             {/* Teacher Information */}
             {data?.assignTeacher && (
               <div className="bg-gray-100 p-4 rounded-lg">
-                <h2 className="text-xl font-semibold mb-2">Teacher Details</h2>
-                <div className="flex items-center space-x-4">
+                <h2 className="text-xl font-semibold mb-4 md:mb-2">
+                  Teacher Details
+                </h2>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
                   <img
                     src={data?.assignTeacherPic}
                     alt={data?.assignTeacher}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="w-16 h-16 sm:w-12 sm:h-12 rounded-full object-cover"
                   />
-                  <div>
+                  <div className="flex flex-col">
                     <h3 className="text-lg font-semibold">
                       {data?.assignTeacher}
                     </h3>
-                    <p className="text-gray-600 normal-case">
+                    <p className="text-gray-600 normal-case text-sm md:text-base">
                       {data?.assignTeacherEmail}
                     </p>
                   </div>
                   {user.userType === "Student" && data.isBuyer && (
-                    <>
+                    <div className="flex flex-col items-start mt-3 sm:mt-0">
                       <Button
-                        className="mt-3"
+                        className="w-full sm:w-auto"
                         onClick={sendNotificationToAdmin}
                         disabled={data.status && data.status === "pending"}
                       >
@@ -165,24 +168,7 @@ function ResourceDetails({ title }) {
                           "Request a meeting"
                         )}
                       </Button>
-                      {/* <p className="mt-5">
-                  {data.status && data.status === "pending" ? (
-                    <span className="text-yellow-300">
-                      Please wait for response from Admin
-                    </span>
-                  ) : data.status === "approved" ? (
-                    <span className="text-green-300">
-                      Please check your email inbox for meeting details
-                    </span>
-                  ) : (
-                    <span className="text-red-300">
-                      If you already received an email and completed the
-                      meeting, ignore this message. Otherwise, please request a
-                      meeting again.
-                    </span>
-                  )}
-                </p> */}
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
@@ -192,17 +178,56 @@ function ResourceDetails({ title }) {
 
             {/* Call to Action */}
             {checkPermission() && (
-              <Button
-                className="mt-4"
-                onClick={
-                  data?.type === "PDF"
-                    ? () => window.open(data.pdf, "_blank")
-                    : videoPage
-                }
-              >
-                Get Started
-              </Button>
+              <>
+                <Button
+                  className="mt-4"
+                  onClick={
+                    data?.type === "PDF"
+                      ? () => window.open(data.pdf, "_blank")
+                      : videoPage
+                  }
+                >
+                  Get Started
+                </Button>
+              </>
             )}
+
+            <>
+              {/* Generate Quiz Button for Teacher */}
+              {user?.userType === "Teacher" && data.isAssigned && (
+                <>
+                  <Button
+                    className="mt-4 ml-3 bg-green-600 hover:bg-green-500 focus:bg-green-500"
+                    onClick={() => navigate(`/dashboard/${id}/generate-quiz`)}
+                  >
+                    Generate Quiz
+                  </Button>
+                  <Button
+                    className="mt-4 ml-3 bg-blue-600 hover:bg-blue-500 focus:bg-blue-500"
+                    onClick={() => navigate(`/dashboard/${id}/add-assignment`)}
+                  >
+                    Add Assignment
+                  </Button>
+                </>
+              )}
+              {/* View Quizzes Button for Student */}
+              {user?.userType === "Student" && data.isBuyer && (
+                <>
+                  <Button
+                    className="mt-4 ml-3 bg-green-600 hover:bg-green-500"
+                    onClick={() => navigate(`/dashboard/${id}/quizzes`)}
+                  >
+                    View Quizzes
+                  </Button>
+                  <Button
+                    className="mt-4 ml-3 bg-blue-600 hover:bg-blue-500"
+                    onClick={() => navigate(`/dashboard/${id}/assignments`)}
+                  >
+                    View Assignments
+                  </Button>
+                </>
+              )}
+            </>
 
             {/* Payment Button for Students */}
             {user?.userType === "Student" && !data.isBuyer && (

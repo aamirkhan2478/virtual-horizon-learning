@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FiUpload, FiCheckCircle } from "react-icons/fi";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/Layouts/Dashboard/components/ui/tooltip";
+import { Button } from "../components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useToast } from "../components/ui/use-toast";
+import { useAddAssignment } from "@/hooks/useResources";
 
-const AddAssignment = () => {
+const AddAssignment = ({ title }) => {
   const [file, setFile] = useState(null);
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -10,8 +21,19 @@ const AddAssignment = () => {
   const [marks, setMarks] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
+  const { mutate, isLoading } = useAddAssignment(onSuccess, onError);
+  const { toast } = useToast();
+
+  const goToResourceDetails = () => {
+    navigate(`/dashboard/resource-details/${id}`);
+  };
 
   useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+
     // Simulating real-time updates
     const timer = setTimeout(() => {
       if (submitted && !marked) {
@@ -24,7 +46,7 @@ const AddAssignment = () => {
     }, 10000);
 
     return () => clearTimeout(timer);
-  }, [submitted, marked]);
+  }, [submitted, marked, title]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -36,18 +58,90 @@ const AddAssignment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     setLoading(true);
-    setTimeout(() => {
-      setSubmitted(true);
+    if (!file) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Please upload a file.",
+      });
+      document.getElementById("file").focus();
       setLoading(false);
-    }, 2000);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("assignment", file);
+    formData.append("comment", comment);
+    formData.append("resourceId", id);
+    formData.append("userId", user.id);
+
+    // Log each entry in the formData
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}:`, value); // Logs key-value pairs
+    // }
+
+    mutate(formData, {
+      onSuccess: () => {
+        toast({
+          variant: "default",
+          title: "Assignment Added Successfully!",
+          className: "bg-green-500 text-white",
+        });
+        setLoading(false);
+        // navigate(`/dashboard/resource-detail/${id}`);
+      },
+      onError: (error) => {
+        onError(error);
+        setLoading(false);
+      },
+    });
+
+    // setTimeout(() => {
+    //   setSubmitted(true);
+    //   setLoading(false);
+    // }, 2000);
   };
+
+  function onSuccess() {
+    toast({
+      variant: "default",
+      title: "Resource Added Successfully!",
+      className: "bg-green-500 text-white",
+    });
+  }
+
+  function onError(error) {
+    console.log(error);
+    toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: error?.response?.data?.message,
+    });
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Add Assignment
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Add Assignment
+        </h1>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={goToResourceDetails}
+              >
+                <ArrowRight className="h-6 w-6 font-bold" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">Go Back</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
       {!submitted ? (
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -68,21 +162,23 @@ const AddAssignment = () => {
                     <span className="font-semibold">Click to upload</span> or
                     drag and drop
                   </p>
-                  <p className="text-xs text-gray-500">
-                    PDF, DOCX (MAX. 10MB)
-                  </p>
+                  <p className="text-xs text-gray-500">PDF, DOCX (MAX. 10MB)</p>
                 </div>
                 <input
                   id="file"
                   type="file"
+                  name="file"
                   className="hidden"
                   onChange={handleFileChange}
-                  required
                   accept=".pdf, .docx"
                 />
               </label>
             </div>
-            {file && <p className="mt-2 text-sm text-gray-500">{file.name}</p>}
+            {file && (
+              <p className="mt-2 text-sm text-gray-500 normal-case">
+                {file.name}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -100,17 +196,13 @@ const AddAssignment = () => {
               onChange={handleCommentChange}
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            disabled={loading}
-          >
+          <Button type="submit" variant="parimary" disabled={loading}>
             {loading ? (
               <AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3" />
             ) : (
               "Submit Assignment"
             )}
-          </button>
+          </Button>
         </form>
       ) : (
         <div className="space-y-6">

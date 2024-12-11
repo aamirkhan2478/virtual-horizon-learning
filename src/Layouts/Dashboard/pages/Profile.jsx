@@ -1,9 +1,17 @@
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { Card, CardContent, CardHeader } from "@/Layouts/Dashboard/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/Layouts/Dashboard/components/ui/card";
 import { Button } from "@/Layouts/Dashboard/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/Layouts/Dashboard/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/Layouts/Dashboard/components/ui/avatar";
 import {
   Dialog,
   DialogContent,
@@ -263,8 +271,10 @@ const Profile = ({ title }) => {
 
                   <DialogContent className="sm:max-w-[500px]">
                     <DialogHeader>
-                      <DialogTitle>Edit profile</DialogTitle>
-                      <DialogDescription>
+                      <DialogTitle className="normal-case">
+                        Edit profile
+                      </DialogTitle>
+                      <DialogDescription className="normal-case">
                         Make changes to your profile. Click save when
                         you&apos;re done.
                       </DialogDescription>
@@ -324,15 +334,19 @@ const Profile = ({ title }) => {
               <div className="grid grid-cols-1 sm:md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div className="grid gap-2">
                   <p className="text-md font-medium leading-none">Name</p>
-                  <p className="text-sm text-muted-foreground">{user?.name}</p>
+                  <p className="text-sm text-muted-foreground normal-case">
+                    {user?.name}
+                  </p>
                 </div>
                 <div className="grid gap-2">
                   <p className="text-md font-medium leading-none">Email</p>
-                  <p className="text-sm text-muted-foreground">{user?.email}</p>
+                  <p className="text-sm text-muted-foreground normal-case">
+                    {user?.email}
+                  </p>
                 </div>
                 <div className="grid gap-2">
                   <p className="text-md font-medium leading-none">Phone #</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground normal-case">
                     {user?.phoneNumber}
                   </p>
                 </div>
@@ -404,7 +418,7 @@ const Profile = ({ title }) => {
                       </button>
                     </div>
                   </div>
-                  <div className="grid gap-2 md:lg:pt-[21px]">
+                  <div className="grid gap-2 md:lg:pt-[30px]">
                     <Button
                       className="md:lg:w-[160px]"
                       disabled={changePasswordLoading}

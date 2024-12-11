@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSubmitContact } from "@/hooks/useSubmitContact";
 import { useToast } from "@/Layouts/Dashboard/components/ui/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { Button } from "@/Layouts/Dashboard/components/ui/button";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -28,8 +30,8 @@ export const Contact = () => {
   function onSuccess(data) {
     toast({
       variant: "default",
-      title: "Registration Successful!",
-      description: "Your account has been created successfully.",
+      title: "Success",
+      description: data.message,
       className: "bg-green-500 text-white",
     });
     console.log(data); // Log data for debugging or additional handling
@@ -149,12 +151,20 @@ export const Contact = () => {
             </div>
 
             {/* Submit Button */}
-            <button
+            <Button
+              disabled={isLoading}
               type="submit"
               className="bg-blue-500 text-white px-6 py-3 rounded-md font-semibold shadow-md transition hover:bg-blue-600"
             >
-              Send Message
-            </button>
+              {isLoading ? (
+                <>
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                "Send Message"
+              )}
+            </Button>
           </form>
         </div>
       </div>

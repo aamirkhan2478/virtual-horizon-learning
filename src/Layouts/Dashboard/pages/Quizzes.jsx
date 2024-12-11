@@ -1,10 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/Layouts/Dashboard/components/ui/tooltip";
+import { Button } from "../components/ui/button";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Quizzes = () => {
+const Quizzes = ({ title }) => {
+  useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+  }, [title]);
+
   const [quizzes, setQuizzes] = useState([
     {
       id: 1,
@@ -65,6 +77,12 @@ const Quizzes = () => {
       completed: false,
     },
   ]);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const ResourceDetail = () => {
+    // Navigate Resource Detail Page
+    navigate(`/dashboard/resource-details/${id}`);
+  };
 
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -235,7 +253,6 @@ const Quizzes = () => {
           </button>
         </div>
 
-
         <Separator />
         {reviewMode && (
           <div className="text-left">
@@ -279,7 +296,19 @@ const Quizzes = () => {
   const renderQuizList = () => {
     return (
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold mb-6">Available Quizzes</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold mb-6">Available Quizzes</h1>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="outline" onClick={ResourceDetail}>
+                  <ArrowRight className="h-6 w-6 font-bold" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="left">Go Back</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         {quizzes.map((quiz) => (
           <motion.div
             key={quiz.id}

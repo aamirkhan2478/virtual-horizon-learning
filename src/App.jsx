@@ -30,11 +30,13 @@ import { Instructor } from "./Layouts/Main/pages/Instructor";
 import { Blog } from "./Layouts/Main/pages/Blog";
 import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
 import ScheduleMeeting from "./Layouts/Dashboard/pages/ScheduleMeeting";
-import CreateQuiz from "./Layouts/Dashboard/pages/CreateQuiz";
+import GenerateQuiz from "./Layouts/Dashboard/pages/GenerateQuiz";
 import Quizzes from "./Layouts/Dashboard/pages/Quizzes";
 import SubmitAssignment from "./Layouts/Dashboard/pages/SubmitAssignment";
 import AddAssignment from "./Layouts/Dashboard/pages/AddAssignment";
 import { FAQs } from "./Layouts/Main/pages/FAQs";
+import Assignments from "./Layouts/Dashboard/pages/Assignments";
+import ErrorPage from "./Layouts/Main/ErrorPage";
 
 const App = () => {
   return (
@@ -112,21 +114,34 @@ const App = () => {
               element={<ScheduleMeeting title="Schedule Meeting" />}
             />
             <Route
-              path="/dashboard/add-quiz"
-              element={<CreateQuiz title="Add Quiz" />}
-            />
-            <Route path="/dashboard/quiz" element={<Quizzes title="Quiz" />} />
-            <Route
-              path="/dashboard/submit-assignment"
-              element={<SubmitAssignment title="SubmitAssignment" />}
+              path="/dashboard/:id/generate-quiz"
+              element={<GenerateQuiz title="Generate Quiz" />}
             />
             <Route
-              path="/dashboard/add-assignment"
-              element={<AddAssignment title="AddAssignment" />}
+              path="/dashboard/:id/quizzes"
+              element={<Quizzes title="Quizzes" />}
+            />
+            <Route
+              path="/dashboard/:resourceId/assignments"
+              element={<Assignments title="Assignments" />}
+            />
+            <Route
+              path="/dashboard/:resourceId/submit-assignment/:assignmentId"
+              element={<SubmitAssignment title="Submit Assignment" />}
+            />
+            <Route
+              path="/dashboard/:id/add-assignment"
+              element={<AddAssignment title="Add Assignment" />}
             />
           </Route>
           <Route path="/room/:id" element={<Room title="Video Room" />} />
         </Route>
+
+        {/* Catch-all Route for Unmatched Paths */}
+        <Route
+          path="*"
+          element={<ErrorPage title="Page Not Found" />} // ErrorPage component
+        />
       </Routes>
     </>
   );
