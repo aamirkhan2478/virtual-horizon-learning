@@ -67,19 +67,19 @@ export const Instructor = () => {
               <InstructorCard
                 color="text-red-500"
                 icon={<Users size={40} />}
-                title={counts.totalStudents}
+                title={counts?.totalStudents}
                 desc="Total Students"
               />
               <InstructorCard
                 color="text-orange-500"
                 icon={<BookOpenCheck size={40} />}
-                title={counts.totalResources}
+                title={counts?.totalResources}
                 desc="Total Resources"
               />
               <InstructorCard
                 color="text-purple-500"
                 icon={<GraduationCap size={40} />}
-                title={counts.totalTeachers}
+                title={counts?.totalTeachers}
                 desc="Total Teachers"
               />
             </div>
