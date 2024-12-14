@@ -23,7 +23,7 @@ const GenerateQuiz = () => {
   const { data, isLoading } = useGetResource(id);
   const { mutate, isLoading: generating } = useGenerateQuiz(onSuccess, onError);
   const { mutate: saveQuiz, isLoading: saving } = useSaveQuiz();
-  const [loading, setLolading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -31,7 +31,7 @@ const GenerateQuiz = () => {
   }
 
   const generateQuiz = () => {
-    setLolading(false);
+    setLoading(false);
     mutate({ userPrompt: prompt });
   };
 
@@ -39,8 +39,8 @@ const GenerateQuiz = () => {
     e.preventDefault();
 
     const saveData = {
-      ...questions,
       resource_id: Number(id),
+      questions,
     };
     saveQuiz(saveData);
   };
@@ -95,8 +95,8 @@ const GenerateQuiz = () => {
           />
           <p className="text-sm text-gray-500 normal-case">
             <b>Example Prompt:</b> <br />
-            Make a quiz on 'Your Title' with 10 questions and 4 options each.
-            Each question should have one correct answer.
+            Make a quiz on &apos;Your Title&apos; with 10 questions and 4
+            options each. Each question should have one correct answer.
           </p>
         </div>
 
@@ -139,7 +139,16 @@ const GenerateQuiz = () => {
             type="submit"
             className="w-50 mr-3 p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            <SaveIcon size={20} className="inline-block mr-2" /> Save Quiz
+            {saving ? (
+              <>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </>
+            ) : (
+              <>
+                <SaveIcon size={20} className="inline-block mr-2" /> Save Quiz
+              </>
+            )}
           </Button>
           <Button
             disabled={questions.length === 0 || prompt === ""}
