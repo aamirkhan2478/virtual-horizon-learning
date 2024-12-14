@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { LibraryBig, Users, UsersRound } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Layouts/Dashboard/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/Layouts/Dashboard/components/ui/card";
 
 const Dashboard = ({ title }) => {
   useEffect(() => {
@@ -56,7 +61,7 @@ const Dashboard = ({ title }) => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Shared Resources
+                  Total Resources
                 </CardTitle>
                 <LibraryBig className="h-4 w-4 text-muted-foreground" />
               </CardHeader>

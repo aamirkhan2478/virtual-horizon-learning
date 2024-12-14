@@ -9,9 +9,9 @@ export const Footer = () => {
         <div className="container grid grid-cols-4 gap-5 md1:grid-cols-2">
           <div className="logo">
             <img src={logImg} alt="logImg" className="h-15 w-20" />
-            <span className="text-[14px]">
-              Great lesson ideas and lesson plans for ESL teachers! Educators
-              can customize lesson plans to best.
+            <span className="text-[12px] normal-case">
+              Virtual Horizon Learning. Revolutionizing Education for a Digital
+              Age
             </span>
           </div>
 
@@ -19,7 +19,7 @@ export const Footer = () => {
             <h4 className="text-black text-sm font-semibold mb-5">
               Quick Links
             </h4>
-            <NavLink to="/about" className=" text-[14px] block mb-2 ">
+            <NavLink to="/about" className=" text-[14px] block mb-2">
               About
             </NavLink>
             <NavLink to="/courses " className=" text-[14px] block mb-2">

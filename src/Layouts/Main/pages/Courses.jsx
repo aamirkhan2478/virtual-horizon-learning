@@ -35,6 +35,7 @@ export const Courses = () => {
               >
                 <div className="images rounded-t-lg relative overflow-hidden h-40 w-ful">
                   <img
+                    onClick={() => handleDetailsClick(course.id)}
                     src={course.thumbnail}
                     alt={course.title}
                     className="rounded-t-lg object-cover w-full h-full transition ease-in-out delay-150 cursor-pointer hover:scale-125 duration-300"

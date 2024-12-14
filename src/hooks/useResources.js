@@ -175,3 +175,12 @@ export const useSubmitAssignment = (onSuccess, onError) => {
     onError,
   });
 };
+
+const getCounts = async () => {
+  const { data } = await axios.get("/counts");
+  return data;
+};
+
+export const useCounts = () => {
+  return useQuery("counts", getCounts);
+};

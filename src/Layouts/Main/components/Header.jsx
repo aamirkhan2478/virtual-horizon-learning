@@ -17,14 +17,20 @@ export const Header = () => {
       <header className="bg-white py-4 text-black sticky z-50 shadow-md top-0 left-0 w-full">
         <div className="container flex justify-between items-center">
           <div className="logo flex items-center gap-6">
-            <NavLink to="/">
+            <NavLink to="/" onClick={window.scrollTo(0, 0)}>
               <img src={LogoImg} alt="logo" className="h-15 w-20" />
             </NavLink>
           </div>
           <nav className={open ? "mobile-view" : "desktop-view"}>
             <ul className="flex items-center gap-6">
               {LinkData.map((link) => (
-                <li key={link.id} onClick={() => setOpen(null)}>
+                <li
+                  key={link.id}
+                  onClick={() => {
+                    setOpen(null); // Close the menu
+                    window.scrollTo(0, 0); // Scroll to the top
+                  }}
+                >
                   <NavLink
                     className={({ isActive }) =>
                       isActive ? "text-primary1 text-sm" : "text-[15px]"

@@ -29,15 +29,15 @@ export const HomeContent = () => {
         <div className="container">
           <div className="flex items-center justify-center md1:flex-col">
             <div className="left w-1/2 text-black md1:w-full">
-              <h1 className="text-2xl leading-tight text-black font-semibold">
-                Launch Your Learning Journey with Virtual Horizon!
+              <h1 className="text-xl leading-tight text-black font-semibold normal-case">
+                Welcome to Virtual Horizon Learning!
               </h1>
-              <h3 className="text-md mt-3">
-                Get unlimited access to over 60+ expert instructors.
+              <h3 className="text-md mt-1 normal-case">
+                Revolutionizing Education for a Digital Age
               </h3>
-              <span className="text-[14px]">
-                You&apos;re guaranteed to find the perfect course for your academic
-                and personal growth.
+              <span className="text-[13px] normal-case italic">
+                You&apos;re guaranteed to find the perfect course for <br />{" "}
+                your academic and personal growth.
               </span>
             </div>
             <div className="right w-1/2 md1:w-full relative">

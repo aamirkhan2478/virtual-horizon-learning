@@ -32,7 +32,7 @@ const Register = ({ title }) => {
   const data = [
     { value: "Teacher", label: "Teacher" },
     { value: "Student", label: "Student" },
-    { value: "Parent", label: "Parent" },
+    // { value: "Parent", label: "Parent" },
   ];
 
   const { mutate, isLoading } = useRegister(onSuccess, onError);
