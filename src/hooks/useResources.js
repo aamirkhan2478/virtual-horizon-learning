@@ -176,11 +176,19 @@ export const useSubmitAssignment = (onSuccess, onError) => {
   });
 };
 
-const getCounts = async () => {
-  const { data } = await axios.get("/counts");
-  return data;
+const getCounts = async (userId) => {
+  if (userId) {
+    const { data } = await axios.get(`/counts?userId=${userId}`);
+    return data;
+  } else {
+    const { data } = await axios.get(`/counts`);
+    return data;
+  }
 };
 
-export const useCounts = () => {
-  return useQuery("counts", getCounts);
+export const useCounts = (userId) => {
+  return useQuery({
+    queryKey: ["counts", userId],
+    queryFn: () => getCounts(userId),
+  });
 };

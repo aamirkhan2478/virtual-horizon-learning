@@ -7,7 +7,7 @@ const Loader = ({
   customMessage = null,
 }) => {
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState("Loading content...");
+  const [message, setMessage] = useState("Loading... Please wait...");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,14 +21,16 @@ const Loader = ({
     }, 500);
 
     const messages = [
-      "Loading content...",
-      "Preparing your learning materials...",
+      "Loading... Please wait...",
+      "Preparing content...",
+      "Taking a bit longer...",
       "Almost there...",
-      "Finalizing your educational journey...",
     ];
 
+    let index = 0; // Start from the first message
     const messageInterval = setInterval(() => {
-      setMessage(messages[Math.floor(Math.random() * messages.length)]);
+      setMessage(messages[index]); // Set the current message
+      index = (index + 1) % messages.length; // Move to the next message, looping back to the start
     }, 2000);
 
     return () => {
@@ -69,7 +71,7 @@ const Loader = ({
 
         {/* Message */}
         {showMessages && (
-          <p className="text-gray-700 text-center" aria-live="polite">
+          <p className="text-gray-700 text-center normal-case" aria-live="polite">
             {message} {/* Show customMessage if provided */}
           </p>
         )}
