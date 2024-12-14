@@ -41,6 +41,7 @@ const GenerateQuiz = () => {
     const saveData = {
       resource_id: Number(id),
       questions,
+      marks: questions.length,
     };
     saveQuiz(saveData);
   };
