@@ -25,10 +25,8 @@ import MainLayout from "./Layouts/Main";
 import { Home } from "./Layouts/Main/pages/Home";
 import { Contact } from "./Layouts/Main/pages/Contact";
 import { About } from "./Layouts/Main/pages/About";
-import { Courses } from "./Layouts/Main/pages/Courses";
-import { Instructor } from "./Layouts/Main/pages/Instructor";
-import { Blog } from "./Layouts/Main/pages/Blog";
-import { BlogSinglePage } from "./Layouts/Main/components/BlogSinglePage";
+import { FrontResources } from "./Layouts/Main/pages/Resources";
+import { Teachers } from "./Layouts/Main/pages/Teachers";
 import ScheduleMeeting from "./Layouts/Dashboard/pages/ScheduleMeeting";
 import GenerateQuiz from "./Layouts/Dashboard/pages/GenerateQuiz";
 import Quizzes from "./Layouts/Dashboard/pages/Quizzes";
@@ -37,6 +35,8 @@ import AddAssignment from "./Layouts/Dashboard/pages/AddAssignment";
 import { FAQs } from "./Layouts/Main/pages/FAQs";
 import Assignments from "./Layouts/Dashboard/pages/Assignments";
 import ErrorPage from "./Layouts/Main/ErrorPage";
+import ViewScore from "./Layouts/Dashboard/pages/ViewScore";
+import SubmittedAssignments from "./Layouts/Dashboard/pages/SubmittedAssignments";
 
 const App = () => {
   return (
@@ -44,14 +44,15 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faqs" element={<FAQs />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/instructor" element={<Instructor />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/single-blog" element={<BlogSinglePage />} />
+          <Route index element={<Home title={"Home"} />} />
+          <Route path="/contact" element={<Contact title={"Contact"} />} />
+          <Route path="/faqs" element={<FAQs title={"FAQs"} />} />
+          <Route path="/about" element={<About title={"About"} />} />
+          <Route
+            path="/resources"
+            element={<FrontResources title={"Resources"} />}
+          />
+          <Route path="/teachers" element={<Teachers title={"Teachers"} />} />
         </Route>
         <Route element={<LoginProtected />}>
           <Route element={<AuthLayout />}>
@@ -132,6 +133,14 @@ const App = () => {
             <Route
               path="/dashboard/:id/add-assignment"
               element={<AddAssignment title="Add Assignment" />}
+            />
+            <Route
+              path="/dashboard/:id/submitted-assignments"
+              element={<SubmittedAssignments title="Submitted Assignments" />}
+            />
+            <Route
+              path="/dashboard/:id/view-scores"
+              element={<ViewScore title="View Score" />}
             />
           </Route>
           <Route path="/room/:id" element={<Room title="Video Room" />} />

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSubmitContact } from "@/hooks/useSubmitContact";
 import { useToast } from "@/Layouts/Dashboard/components/ui/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "@/Layouts/Dashboard/components/ui/button";
 
-export const Contact = () => {
+export const Contact = ({ title }) => {
+  useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+  }, [title]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

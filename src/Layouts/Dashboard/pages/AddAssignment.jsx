@@ -15,7 +15,8 @@ import { useAddAssignment } from "@/hooks/useResources";
 
 const AddAssignment = ({ title }) => {
   const [file, setFile] = useState(null);
-  const [comment, setComment] = useState("");
+  const [description, setDescription] = useState("");
+  const [totalMarks, setTotalMarks] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [marked, setMarked] = useState(false);
   const [marks, setMarks] = useState(null);
@@ -52,8 +53,12 @@ const AddAssignment = ({ title }) => {
     setFile(e.target.files[0]);
   };
 
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleTotalMarksChange = (e) => {
+    setTotalMarks(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -72,14 +77,15 @@ const AddAssignment = ({ title }) => {
     }
 
     const formData = new FormData();
-    formData.append("assignment", file);
-    formData.append("comment", comment);
+    formData.append("file", file);
+    formData.append("marks", totalMarks);
+    formData.append("description", description);
     formData.append("resourceId", id);
     formData.append("userId", user.id);
 
     // Log each entry in the formData
     // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}:`, value); // Logs key-value pairs
+    //   console.log(`${key}:`, value);
     // }
 
     mutate(formData, {
@@ -90,9 +96,11 @@ const AddAssignment = ({ title }) => {
           className: "bg-green-500 text-white",
         });
         setLoading(false);
-        // navigate(`/dashboard/resource-detail/${id}`);
+        navigate(`/dashboard/resource-details/${id}`);
       },
       onError: (error) => {
+        console.log(error);
+
         onError(error);
         setLoading(false);
       },
@@ -114,10 +122,18 @@ const AddAssignment = ({ title }) => {
 
   function onError(error) {
     console.log(error);
+
+    // Get the error message
+    const errorMessage =
+      error?.response?.data?.message || // Use message if available
+      error?.response?.data?.error || // Use error field if available
+      "Something went wrong"; // Default fallback message
+
+    // Show toast
     toast({
       variant: "destructive",
       title: "Uh oh! Something went wrong.",
-      description: error?.response?.data?.message,
+      description: errorMessage,
     });
   }
 
@@ -182,25 +198,41 @@ const AddAssignment = ({ title }) => {
           </div>
           <div>
             <label
-              htmlFor="comment"
+              htmlFor="description"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Additional Comments
+              Total Marks
             </label>
-            <textarea
-              id="comment"
+            <input
+              id="total_marks"
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Any additional instructions or comments..."
-              value={comment}
-              onChange={handleCommentChange}
+              placeholder="Enter Total Marks..."
+              value={totalMarks}
+              onChange={handleTotalMarksChange}
+            ></input>
+          </div>
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              rows="4"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter description..."
+              value={description}
+              onChange={handleDescriptionChange}
             ></textarea>
           </div>
-          <Button type="submit" variant="parimary" disabled={loading}>
-            {loading ? (
+          <Button type="submit" variant="parimary" disabled={isLoading}>
+            {isLoading ? (
               <AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3" />
             ) : (
-              "Submit Assignment"
+              "Add Assignment"
             )}
           </Button>
         </form>

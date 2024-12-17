@@ -22,11 +22,11 @@ export const Footer = () => {
             <NavLink to="/about" className=" text-[14px] block mb-2">
               About
             </NavLink>
-            <NavLink to="/courses " className=" text-[14px] block mb-2">
-              Courses
+            <NavLink to="/resources" className=" text-[14px] block mb-2">
+              Resources
             </NavLink>
-            <NavLink to="/instructor" className=" text-[14px] block mb-2">
-              Instructor
+            <NavLink to="/teachers" className=" text-[14px] block mb-2">
+              Teachers
             </NavLink>
           </li>
         </div>

@@ -7,33 +7,19 @@ import {
   TooltipTrigger,
 } from "@/Layouts/Dashboard/components/ui/tooltip";
 import { Button } from "../components/ui/button";
-import { ArrowRight, Download, UploadCloud } from "lucide-react";
+import { ArrowRight, Download, Lock, UploadCloud } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSubmittedAssignments } from "@/hooks/useResources";
+import Loader from "@/components/Loader";
 
 const Assignments = ({ title }) => {
   useEffect(() => {
     document.title = `${title} - Virtual Horizon Learning`;
   }, [title]);
-  const [assignments, setAssignments] = useState([
-    {
-      id: 1,
-      title: "Assignment 1: General Knowledge",
-      fileUrl: "/files/assignment1.pdf",
-    },
-    {
-      id: 2,
-      title: "Assignment 2: Science Quiz",
-      fileUrl: "/files/assignment2.pdf",
-    },
-    {
-      id: 3,
-      title: "Assignment 3: History Research",
-      fileUrl: "/files/assignment3.pdf",
-    },
-  ]);
 
   const { resourceId } = useParams();
-
+  const { data: assignments, isLoading } = useSubmittedAssignments(resourceId);
+  // console.log(assignments);
   const navigate = useNavigate();
 
   const goToResourceDetails = () => {
@@ -64,37 +50,60 @@ const Assignments = ({ title }) => {
             </Tooltip>
           </TooltipProvider>
         </div>
-        {assignments.map((assignment) => (
-          <motion.div
-            key={assignment.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center"
-          >
-            <div>
-              <h2 className="text-xl font-semibold">{assignment.title}</h2>
-            </div>
-            <div className="flex items-center space-x-2">
-              {/* Download Button */}
-              <Button
-                size="icon"
-                variant="link"
-                href={assignment.fileUrl}
-                download
-              >
-                <Download className="h-5 w-5" />
-              </Button>
-              {/* Upload Button */}
-              <Button
-                size="icon"
-                onClick={() => goToSubmitAssignment(assignment.id)}
-              >
-                <UploadCloud className="h-5 w-5" />
-              </Button>
-            </div>
-          </motion.div>
-        ))}
+        {isLoading ? (
+          <Loader showProgressBar={false} />
+        ) : (
+          // Assuming assignments is coming as a prop or state
+          assignments.map((assignment) => (
+            <motion.div
+              key={assignment.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center"
+            >
+              {/* Assignment Details */}
+              <div>
+                <h2 className="text-xl font-semibold">
+                  {assignment?.description}
+                </h2>
+                <p className="text-gray-600">
+                  Total Marks ({assignment?.totalMarks})
+                </p>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex items-center space-x-2">
+                {/* Download Button */}
+                {assignment?.uploadedFilePath && (
+                  <a
+                    href={assignment?.uploadedFilePath}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button size="icon" variant="link">
+                      <Download className="h-5 w-5" />
+                    </Button>
+                  </a>
+                )}
+
+                {/* Conditional Rendering of Upload/Lock Icon */}
+                {assignment?.isSubmitted ? (
+                  <Lock className="h-5 w-5 text-gray-400 text-xl" />
+                ) : (
+                  // Show Upload Icon if isSubmitted is false
+                  <Button
+                    size="icon"
+                    onClick={() => goToSubmitAssignment(assignment?.id)}
+                  >
+                    <UploadCloud className="h-5 w-5" />
+                  </Button>
+                )}
+              </div>
+            </motion.div>
+          ))
+        )}
       </div>
     );
   };

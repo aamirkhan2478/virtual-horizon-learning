@@ -18,8 +18,13 @@ import {
   TooltipTrigger,
 } from "@/Layouts/Dashboard/components/ui/tooltip";
 import { useGetResources } from "@/hooks/useResources";
-import { Alert, AlertDescription, AlertTitle } from "@/Layouts/Dashboard/components/ui/alert";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/Layouts/Dashboard/components/ui/alert";
 import PropTypes from "prop-types";
+import Loader from "@/components/Loader";
 
 function Resources({ title }) {
   useEffect(() => {
@@ -68,50 +73,46 @@ function Resources({ title }) {
           </Alert>
         )}
 
-        {isLoading
-          ? Array((resourcesData ?? []).length)
-              .fill(0)
-              .map((_, index) => (
-                <div key={index} className="border rounded shadow p-3">
-                  <Skeleton className="w-full h-40 mb-4" />
-                  <Skeleton className="w-3/4 h-6 mb-2" />
-                  <Skeleton className="w-1/2 h-5 mb-4" />
-                  <Skeleton className="w-full h-10" />
-                </div>
-              ))
-          : (resourcesData ?? []).map((card, index) => (
-              <Card key={index}>
-                <CardHeader className="p-0">
-                  <img
-                    src={card?.thumbnail}
-                    alt="Card Image"
-                    className="w-full h-[300px] object-cover rounded-t"
-                  />
-                </CardHeader>
-                <CardContent className="p-4">
-                  <CardTitle>{card?.title}</CardTitle>
-                  <CardDescription>
-                    {card?.description
-                      ? card.description.split(" ").slice(0, 10).join(" ") +
-                        (card.description.split(" ").length > 10 ? "..." : "")
-                      : ""}
-                  </CardDescription>
-                  <CardDescription className="mt-3 font-medium">
-                    PKR {card?.price}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter className="p-4 flex justify-center">
-                  <Button
-                    size="sm"
-                    onClick={() =>
-                      navigate(`/dashboard/resource-details/${card.id}`)
-                    }
-                  >
-                    <BookOpenText className="h-4 w-4 mr-2" /> View Details
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+        {isLoading ? (
+          <Loader showMessages={false} showProgressBar={false} />
+        ) : (
+          (resourcesData ?? []).map((card, index) => (
+            <Card key={index}>
+              <CardHeader className="p-0">
+                <img
+                  src={card?.thumbnail}
+                  alt="Card Image"
+                  className="w-full h-[300px] object-cover rounded-t cursor-pointer"
+                  onClick={() =>
+                    navigate(`/dashboard/resource-details/${card.id}`)
+                  }
+                />
+              </CardHeader>
+              <CardContent className="p-4">
+                <CardTitle>{card?.title}</CardTitle>
+                <CardDescription className="mt-2">
+                  {card?.description
+                    ? card.description.split(" ").slice(0, 10).join(" ") +
+                      (card.description.split(" ").length > 10 ? "..." : "")
+                    : ""}
+                </CardDescription>
+                <CardDescription className="mt-3 font-medium">
+                  PKR {card?.price}
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="p-4 flex justify-center">
+                <Button
+                  size="sm"
+                  onClick={() =>
+                    navigate(`/dashboard/resource-details/${card.id}`)
+                  }
+                >
+                  <BookOpenText className="h-4 w-4 mr-2" /> View Details
+                </Button>
+              </CardFooter>
+            </Card>
+          ))
+        )}
       </div>
     </>
   );

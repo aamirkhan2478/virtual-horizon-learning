@@ -80,7 +80,7 @@ const Login = ({ title }) => {
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
               <h1 className="text-3xl font-bold">Login</h1>
-              <p className="text-sm text-balance text-muted-foreground">
+              <p className="text-sm text-balance text-muted-foreground normal-case">
                 Enter your credentials to login to your account
               </p>
             </div>
@@ -102,7 +102,7 @@ const Login = ({ title }) => {
                     <Label htmlFor="password">Password</Label>
                     <Link
                       to={"/forgot-password"}
-                      className="ml-auto inline-block text-sm underline"
+                      className="ml-auto inline-block text-sm underline normal-case"
                     >
                       Forgot your password?
                     </Link>
@@ -137,19 +137,19 @@ const Login = ({ title }) => {
                 </Button>
               </div>
             </form>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm normal-case">
               Don&apos;t have an account?&nbsp;
               <Link to={"/register"} className="underline">
                 Sign up
               </Link>
             </div>
-            <div className="text-center text-sm">
+            <div className="text-center text-sm normal-case">
               Don&apos;t get verification email?&nbsp;
               <Link to={"/resend-email"} className="underline">
                 Resend Now
               </Link>
             </div>
-            <div className="text-center text-sm">
+            <div className="text-center text-sm normal-case">
               Go to Home Page?&nbsp;
               <Link to={"/"} className="underline">
                 Home Page

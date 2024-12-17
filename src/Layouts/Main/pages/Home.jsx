@@ -1,14 +1,17 @@
 import heroImg from "../assets/images/hero.png";
 import heroImgback from "../assets/images/hero-shape-purple.png";
-// import { FiSearch } from "react-icons/fi";
 import { BsFillLightningChargeFill } from "react-icons/bs";
 import { FaBookReader, FaGraduationCap, FaUsers } from "react-icons/fa";
 import { About } from "./About";
-import { Courses } from "./Courses";
-import { Instructor } from "./Instructor";
-// import { Blog } from "./Blog";
+import { FrontResources } from "./Resources";
+import { Teachers } from "./Teachers";
+import { useEffect } from "react";
 
-export const Home = () => {
+export const Home = ({ title }) => {
+  useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+  }, [title]);
+
   return (
     <>
       <HomeContent />
@@ -16,9 +19,8 @@ export const Home = () => {
       <br />
       <br />
       <br />
-      <Courses />
-      <Instructor />
-      {/* <Blog /> */}
+      <FrontResources />
+      <Teachers />
     </>
   );
 };

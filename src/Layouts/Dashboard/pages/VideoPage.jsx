@@ -12,6 +12,7 @@ import { Button } from "@/Layouts/Dashboard/components/ui/button";
 import { useGetResource } from "@/hooks/useResources";
 import ReactPlayer from "react-player";
 import PropTypes from "prop-types";
+import Loader from "@/components/Loader";
 
 function VideoPage({ title }) {
   useEffect(() => {
@@ -42,7 +43,7 @@ function VideoPage({ title }) {
   console.log("videos", videos);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader showMessages={false} />;
   }
 
   return (

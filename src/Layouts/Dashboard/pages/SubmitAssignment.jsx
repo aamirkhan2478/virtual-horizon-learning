@@ -76,11 +76,9 @@ const SubmitAssignment = ({ title }) => {
 
     // Create a FormData object to hold the data
     const formData = new FormData();
-    formData.append("assignment", file); // File uploaded by the user
-    formData.append("comment", comment); // Additional comments
-    formData.append("resourceId", resourceId); // Resource ID from params
-    formData.append("assignmentId", assignmentId); // Example Assignment ID
-    formData.append("userId", user.id); // Example User ID (should come from auth)
+    formData.append("file", file); // File uploaded by the user
+    formData.append("resourceId", assignmentId);
+    formData.append("userId", user.id);
 
     // Log the data to verify its structure
     // for (let [key, value] of formData.entries()) {
@@ -91,11 +89,11 @@ const SubmitAssignment = ({ title }) => {
       onSuccess: () => {
         toast({
           variant: "default",
-          title: "Assignment Added Successfully!",
+          title: "Assignment Submitted Successfully!",
           className: "bg-green-500 text-white",
         });
         setLoading(false);
-        // navigate(`/dashboard/resource-detail/${id}`);
+        navigate(`/dashboard/resource-details/${resourceId}`);
       },
       onError: (error) => {
         onError(error);
@@ -112,17 +110,24 @@ const SubmitAssignment = ({ title }) => {
   function onSuccess() {
     toast({
       variant: "default",
-      title: "Resource Added Successfully!",
+      title: "Assignment Submitted Successfully!",
       className: "bg-green-500 text-white",
     });
   }
 
   function onError(error) {
     console.log(error);
+
+    // Get the error message
+    const errorMessage =
+      error?.response?.data?.message || // Use message if available
+      error?.response?.data?.error || // Use error field if available
+      "Something went wrong"; // Default fallback message
+
     toast({
       variant: "destructive",
       title: "Uh oh! Something went wrong.",
-      description: error?.response?.data?.message,
+      description: errorMessage,
     });
   }
 
@@ -182,22 +187,6 @@ const SubmitAssignment = ({ title }) => {
                 {file.name}
               </p>
             )}
-          </div>
-          <div>
-            <label
-              htmlFor="comment"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Additional Comments
-            </label>
-            <textarea
-              id="comment"
-              rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Any additional instructions or comments..."
-              value={comment}
-              onChange={handleCommentChange}
-            ></textarea>
           </div>
           <button
             type="submit"

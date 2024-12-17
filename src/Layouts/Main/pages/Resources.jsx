@@ -2,8 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { useGetCourses } from "@/hooks/useResources";
 import Loader from "@/components/Loader";
+import { useEffect } from "react";
 
-export const Courses = () => {
+export const FrontResources = ({ title }) => {
+  useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+  }, [title]);
+
   const { data: courses, isLoading, error } = useGetCourses();
   const navigate = useNavigate();
 
@@ -16,14 +21,14 @@ export const Courses = () => {
 
   return (
     <>
-      <section className="courses bg-[#F3F4F8] py-16 ">
+      <section className="courses bg-[#F3F4F8] pt-12 pb-32">
         <div className="w-4/5 m-auto">
-          <div className="heading mb-16">
-            <h1 className="text-3xl font-semibold text-black">
-              Find The Right Online Course For You
+          <div className="heading mb-8">
+            <h1 className="text-3xl font-semibold text-black normal-case">
+              Find The Right Online Resource For You
             </h1>
-            <span className="text-sm mt-2 block">
-              you don&apos;t have to struggle alone, you&apos;ve got our
+            <span className="text-sm mt-2 block normal-case">
+              You don&apos;t have to struggle alone, you&apos;ve got our
               assistance and help.
             </span>
           </div>
@@ -33,7 +38,7 @@ export const Courses = () => {
                 key={index}
                 className="box rounded-lg shadow-shadow1 bg-white"
               >
-                <div className="images rounded-t-lg relative overflow-hidden h-40 w-ful">
+                <div className="images rounded-t-lg relative overflow-hidden h-40 w-full">
                   <img
                     onClick={() => handleDetailsClick(course.id)}
                     src={course.thumbnail}
@@ -71,7 +76,7 @@ export const Courses = () => {
                     onClick={() => handleDetailsClick(course.id)}
                     className="text-[14px] ml-2 flex items-center"
                   >
-                    Know Details <HiOutlineArrowNarrowRight />
+                    Know Details <HiOutlineArrowNarrowRight className="ml-2" />
                   </button>
                 </div>
               </div>

@@ -11,24 +11,19 @@ export const LinkData = [
   },
   {
     id: 3,
-    title: "courses",
-    url: "/courses",
+    title: "Resources",
+    url: "/resources",
   },
   {
     id: 4,
-    title: "Instructor",
-    url: "/instructor",
+    title: "Teachers",
+    url: "/teachers",
   },
   {
     id: 5,
     title: "contact",
     url: "/contact",
   },
-  // {
-  //   id: 5,
-  //   title: "blog",
-  //   url: "/blog",
-  // },
 ];
 export const courses = [
   {

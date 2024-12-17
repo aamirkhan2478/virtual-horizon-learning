@@ -100,14 +100,14 @@ const Register = ({ title }) => {
             alt="Image"
             width="879"
             height="581"
-            className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            className="h-full w-full object-fill dark:brightness-[0.2] dark:grayscale"
           />
         </div>
         <div className="flex items-center justify-center py-12 flex-row-reverse">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
               <h1 className="text-3xl font-bold">Register</h1>
-              <p className="text-sm text-balance text-muted-foreground">
+              <p className="text-sm text-balance text-muted-foreground normal-case">
                 Enter your details to create an account
               </p>
             </div>
@@ -210,7 +210,7 @@ const Register = ({ title }) => {
                 </Button>
               </div>
             </form>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm normal-case">
               Already have an account?&nbsp;
               <Link to="/login" className="underline">
                 Sign in

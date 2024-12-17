@@ -16,10 +16,11 @@ import { Button } from "../components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
+import Loader from "@/components/Loader";
 
 const ScheduleMeeting = () => {
   const { notification_id } = useParams();
-  
+
   const navigate = useNavigate();
 
   const { data, isLoading } = useGetNotification(notification_id);
@@ -32,9 +33,10 @@ const ScheduleMeeting = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900" />
-      </div>
+      // <div className="flex justify-center items-center">
+      //   <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900" />
+      // </div>
+      <Loader showMessages={false} />
     );
   }
 

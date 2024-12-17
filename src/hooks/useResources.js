@@ -146,7 +146,7 @@ export const useSaveQuiz = () => {
 
 const addAssignment = (values) => {
   const token = localStorage.getItem("token");
-  return axios.post("/resource/add-assignment", values, {
+  return axios.post("/resource/save-assignment", values, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -170,7 +170,7 @@ const submitAssignment = (values) => {
 };
 
 export const useSubmitAssignment = (onSuccess, onError) => {
-  return useMutation(addAssignment, {
+  return useMutation(submitAssignment, {
     onSuccess,
     onError,
   });
@@ -190,5 +190,96 @@ export const useCounts = (userId) => {
   return useQuery({
     queryKey: ["counts", userId],
     queryFn: () => getCounts(userId),
+  });
+};
+
+const getQuizzesList = async (resourceId) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(
+    `/resource/quizzes?resourceId=${resourceId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
+export const useQuizzesList = (resourceId) => {
+  return useQuery({
+    queryKey: ["quizzes", resourceId],
+    queryFn: () => getQuizzesList(resourceId),
+  });
+};
+
+const updateQuiz = async (values) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.post(`/resource/update-quiz`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
+export const useUpdateQuiz = () => {
+  return useMutation(updateQuiz);
+};
+
+const getAssignmentList = async (resourceId) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(
+    `/resource/assignments?resourceId=${resourceId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
+export const useAssignmentList = (resourceId) => {
+  return useQuery({
+    queryKey: ["assignments", resourceId],
+    queryFn: () => getAssignmentList(resourceId),
+  });
+};
+
+const getSubmittedAssignments = async (resourceId) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(
+    `/resource/submitted-assignments?resourceId=${resourceId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
+export const useSubmittedAssignments = (resourceId) => {
+  return useQuery({
+    queryKey: ["submittedAssignments", resourceId],
+    queryFn: () => getSubmittedAssignments(resourceId),
+  });
+};
+
+const updateAssigmentScore = async (values) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.post(`/resource/update-assignment`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
+export const useUpdateAssigmentScore = (onSuccess, onError) => {
+  return useMutation(updateAssigmentScore, {
+    onSuccess,
+    onError,
   });
 };

@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import aboutImg from "../assets/images/about.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FAQs } from "./FAQs";
 import { Laptop, LogIn, TvMinimalPlay, UserPlus } from "lucide-react";
 
-export const About = () => {
+export const About = ({ title }) => {
+  useEffect(() => {
+    document.title = `${title} - Virtual Horizon Learning`;
+  }, [title]);
   return (
     <>
-      <section className="about pb-20">
+      <section className="about pb-20 normal-case">
         <div className="container">
           <div className="heading text-center py-12">
-            <h1 className="text-3xl font-semibold text-black">
+            <h1 className="text-3xl font-semibold text-black normal-case">
               Why Virtual Horizon Learning Stands Out
             </h1>
-            <span className="text-sm mt-2 block">
+            <span className="text-sm mt-2 block normal-case">
               You don't have to struggle alone. With Virtual Horizon Learning,
               you've got our assistance and guidance.
             </span>
