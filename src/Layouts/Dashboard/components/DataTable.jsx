@@ -21,7 +21,14 @@ import {
   TableRow,
 } from "@/Layouts/Dashboard/components/ui/table";
 
-const DataTable = ({ columns, data, isLoading, filterBy, columnId }) => {
+const DataTable = ({
+  columns,
+  data,
+  isLoading,
+  filterBy,
+  showFilterInput = true,
+  columnId,
+}) => {
   const [columnFilters, setColumnFilters] = React.useState([]);
   const table = useReactTable({
     data,
@@ -45,17 +52,23 @@ const DataTable = ({ columns, data, isLoading, filterBy, columnId }) => {
 
   return (
     <div className="w-full">
-      {/* Filter Input */}
-      <div className="flex items-center py-4">
-        <Input
-          placeholder={`Filter by ${filterBy}...`}
-          value={table.getColumn(columnId)?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn(columnId)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
+      {/* Render filter input conditionally */}
+      {showFilterInput && (
+        <div className="mb-4">
+          <label
+            htmlFor="filterInput"
+            className="block text-gray-700 font-medium mb-1"
+          >
+            Filter by {filterBy}:
+          </label>
+          <input
+            id="filterInput"
+            type="text"
+            placeholder={`Filter by ${filterBy}`}
+            className="w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+      )}
 
       {/* Data Table */}
       <div className="rounded-md border">

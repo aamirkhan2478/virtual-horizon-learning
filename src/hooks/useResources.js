@@ -283,3 +283,23 @@ export const useUpdateAssigmentScore = (onSuccess, onError) => {
     onError,
   });
 };
+
+const getScores = async (resourceId) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(
+    `/resource/scores?resourceId=${resourceId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
+export const useScores = (resourceId) => {
+  return useQuery({
+    queryKey: ["scores", resourceId],
+    queryFn: () => getScores(resourceId),
+  });
+};

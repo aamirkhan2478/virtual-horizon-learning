@@ -42,36 +42,66 @@ const Quizzes = ({ title }) => {
     setReviewMode(true);
   };
 
+  //   const handleNextQuestion = useCallback(() => {
+  //     if (
+  //       selectedAnswer[currentQuestion] ===
+  //       selectedQuiz.questions[currentQuestion].correctAnswer
+  //     ) {
+  //       setScore((prevScore) => prevScore + 1);
+  //     }
+  //
+  //     setSelectedAnswer("");
+  //     setTimeLeft(30);
+  //
+  //     if (currentQuestion + 1 < selectedQuiz.questions.length) {
+  //       setCurrentQuestion(currentQuestion + 1);
+  //     } else {
+  //       setShowResult(true);
+  //
+  //       // Update quiz status in the API
+  //       mutate({
+  //         quizId: selectedQuiz.id,
+  //         obtainedMarks: score,
+  //         completed: true,
+  //       });
+  //
+  //       // setQuizzes(
+  //       //   quizzes.map((q) =>
+  //       //     q.id === selectedQuiz.id ? { ...q, completed: true } : q
+  //       //   )
+  //       // );
+  //     }
+  //   }, [selectedAnswer, selectedQuiz, currentQuestion, quizzes]);
+
   const handleNextQuestion = useCallback(() => {
+    let updatedScore = score;
+
+    // Update score if the selected answer is correct
     if (
       selectedAnswer[currentQuestion] ===
       selectedQuiz.questions[currentQuestion].correctAnswer
     ) {
-      setScore((prevScore) => prevScore + 1);
+      updatedScore += 1;
+      setScore(updatedScore); // Update state
     }
 
     setSelectedAnswer("");
     setTimeLeft(30);
 
+    // Check if it's the last question
     if (currentQuestion + 1 < selectedQuiz.questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResult(true);
 
-      // Update quiz status in the API
+      // Send the final score to the API
       mutate({
         quizId: selectedQuiz.id,
-        obtainedMarks: score,
+        obtainedMarks: updatedScore,
         completed: true,
       });
-
-      // setQuizzes(
-      //   quizzes.map((q) =>
-      //     q.id === selectedQuiz.id ? { ...q, completed: true } : q
-      //   )
-      // );
     }
-  }, [selectedAnswer, selectedQuiz, currentQuestion, quizzes]);
+  }, [selectedAnswer, selectedQuiz, currentQuestion, score, mutate]);
 
   useEffect(() => {
     if (selectedQuiz && timeLeft > 0 && !showResult && !isReviewing) {
