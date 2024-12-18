@@ -9,7 +9,7 @@ import {
 import { Button } from "../components/ui/button";
 import { ArrowRight, Download, Lock, UploadCloud } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSubmittedAssignments } from "@/hooks/useResources";
+import { useAssignmentList } from "@/hooks/useResources";
 import Loader from "@/components/Loader";
 
 const Assignments = ({ title }) => {
@@ -18,7 +18,7 @@ const Assignments = ({ title }) => {
   }, [title]);
 
   const { resourceId } = useParams();
-  const { data: assignments, isLoading } = useSubmittedAssignments(resourceId);
+  const { data: assignments, isLoading } = useAssignmentList(resourceId);
   // console.log(assignments);
   const navigate = useNavigate();
 

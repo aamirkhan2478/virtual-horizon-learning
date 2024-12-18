@@ -135,9 +135,9 @@ const SubmittedAssignments = ({ title }) => {
       {isLoading ? (
         <Loader showProgressBar={false} />
       ) : (
-        submittedAssignments.map((assignment) => (
+        submittedAssignments.map((assignment, index) => (
           <motion.div
-            key={assignment.id}
+            key={assignment.id || index} // Fallback to index if `assignment.id` is missing
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
